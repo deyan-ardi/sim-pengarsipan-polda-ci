@@ -207,6 +207,7 @@ class All_model extends CI_Model
 		$row = $this->db->where('id=', $id)->get('pegawai')->row();
 		if ($this->db->delete('pegawai', array('id' => $id))) {
 			unlink('assets/upload/pegawai/' . $row->gambar);
+			return true;
 		}
 	}
 
@@ -242,7 +243,7 @@ class All_model extends CI_Model
 		);
 		return $this->db->where('id=' . $id)->update('jenis_surat', $query);
 	}
-	public function hapusJenisSUrat($id)
+	public function hapusJenisSurat($id)
 	{
 		return $this->db->delete('jenis_surat', array('id' => $id));
 	}

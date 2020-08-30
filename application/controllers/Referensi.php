@@ -66,31 +66,40 @@ class Referensi extends CI_Controller
 			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 			if ($upload['result'] == "success") {
 				if ($this->All_model->inputPegawai($upload)) {
+					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 					redirect('referensi');
 				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 					redirect('referensi/tmb_pegawai');
 				}
 			} else {
 				// var_dump($upload);
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_pegawai');
 			}
 		}
 	}
-	public function edit_pegawai($id_pegawai)
+	public function edit_pegawai($id_pegawai = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Data Pegawai";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['pegawai'] = $this->All_model->getPegawai($id_pegawai);
-			$this->data['satker'] = $this->All_model->getAllSatker();
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_pegawai', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$pegawai = $this->All_model->getPegawai($id_pegawai);
+			if (!empty($pegawai)) {
+				$this->data['title'] = "Referensi - Edit Data Pegawai";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$pegawai = $this->All_model->getPegawai($id_pegawai);
+				$this->data['pegawai'] = $pegawai;
+				$this->data['satker'] = $this->All_model->getAllSatker();
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_pegawai', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_edit_pegawai()
@@ -106,33 +115,39 @@ class Referensi extends CI_Controller
 				if ($upload['result'] == "success") {
 					$data = $upload['file']['file_name'];
 					if ($this->All_model->editPegawai($data, $id_edit)) {
-						$this->session->set_flashdata('berhasil', 'Diubah');
+						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 						redirect('referensi');
 					} else {
+						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 						redirect('referensi/edit_pegawai/' . $id_edit);
 					}
 				} else {
 					// var_dump($upload);
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 					redirect('referensi/edit_pegawai/' . $id_edit);
 				}
 			} else {
 				$data = $_POST['file_old'];
 				if ($this->All_model->editPegawai($data, $id_edit)) {
+					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 					redirect('referensi');
 				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 					redirect('referensi/edit_pegawai/' . $id_edit);
 				}
 			}
 		}
 	}
-	public function hapus_pegawai($id)
+	public function hapus_pegawai($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusPegawai($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi');
 			}
 		}
@@ -172,8 +187,10 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->inputJenisNaskah()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 				redirect('referensi/jenis_naskah');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_jenis_naskah');
 			}
 		}
@@ -194,20 +211,25 @@ class Referensi extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
-	public function edit_naskah($id_naskah)
+	public function edit_naskah($id_naskah = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Jenis Naskah";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['jenis_naskah'] = $this->All_model->getNaskah($id_naskah);
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_naskah', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$naskah = $this->All_model->getNaskah($id_naskah);
+			if (!empty($naskah)) {
+				$this->data['title'] = "Referensi - Edit Jenis Naskah";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['jenis_naskah'] = $naskah;
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_naskah', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_edit_jenis_naskah()
@@ -216,20 +238,24 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->editJenisNaskah()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 				redirect('referensi/jenis_naskah');
 			} else {
-				redirect('referensi/edit_naskah');
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+				redirect('referensi/edit_naskah/' . $_POST['id']);
 			}
 		}
 	}
-	public function hapus_naskah($id)
+	public function hapus_naskah($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusNaskah($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi/jenis_naskah');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi/jenis_naskah');
 			}
 		}
@@ -282,26 +308,33 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->inputKlasifikasi()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 				redirect('referensi/klasifikasi');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_klasifikasi');
 			}
 		}
 	}
-	public function edit_klasifikasi($id_klasifikasi)
+	public function edit_klasifikasi($id_klasifikasi = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Klasifikasi Surat";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['klasifikasi'] = $this->All_model->getKlasifikasi($id_klasifikasi);
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_klasifikasi', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$klasifikasi =	$this->All_model->getKlasifikasi($id_klasifikasi);
+			if (!empty($klasifikasi)) {
+				$this->data['title'] = "Referensi - Edit Klasifikasi Surat";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['klasifikasi'] = $klasifikasi;
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_klasifikasi', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_edit_klasifikasi()
@@ -310,20 +343,24 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->editKlasifikasi()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 				redirect('referensi/klasifikasi');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 				redirect('referensi/edit_klasifikasi');
 			}
 		}
 	}
-	public function hapus_klasifikasi($id)
+	public function hapus_klasifikasi($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusKlasifikasi($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi/klasifikasi');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi/klasifikasi');
 			}
 		}
@@ -375,26 +412,33 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->inputArsipSurat()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 				redirect('referensi/arsip_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_arsip');
 			}
 		}
 	}
-	public function edit_arsip($id_arsip)
+	public function edit_arsip($id_arsip = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Arsip";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['arsip'] = $this->All_model->getArsip($id_arsip);
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_arsip_surat', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$arsip = $this->All_model->getArsip($id_arsip);
+			if (!empty($arsip)) {
+				$this->data['title'] = "Referensi - Edit Arsip";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['arsip'] = $arsip;
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_arsip_surat', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_edit_arsip_surat()
@@ -403,20 +447,24 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->editArsipSurat()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 				redirect('referensi/arsip_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 				redirect('referensi/edit_arsip');
 			}
 		}
 	}
-	public function hapus_arsip($id)
+	public function hapus_arsip($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusArsip($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi/arsip_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi/arsip_surat');
 			}
 		}
@@ -462,20 +510,26 @@ class Referensi extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
-	public function edit_satker($id_satker)
+	public function edit_satker($id_satker = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Satuan Kerja";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['satker'] = $this->All_model->getSatker($id_satker);
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_satker', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$satker = $this->All_model->getSatker($id_satker);
+			if (!empty($satker)) {
+				$this->data['title'] = "Referensi - Edit Satuan Kerja";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['satker'] = $satker;
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_satker', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_tmb_satker()
@@ -484,8 +538,10 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->inputSatker()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 				redirect('referensi/satker');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_satker');
 			}
 		}
@@ -496,20 +552,24 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->editSatker()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 				redirect('referensi/satker');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 				redirect('referensi/edit_satker');
 			}
 		}
 	}
-	public function hapus_satker($id)
+	public function hapus_satker($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusSatker($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi/satker');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi/satker');
 			}
 		}
@@ -550,8 +610,10 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->inputJenisSurat()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
 				redirect('referensi/jenis_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('referensi/tmb_jenis_surat');
 			}
 		}
@@ -572,20 +634,25 @@ class Referensi extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
-	public function edit_surat($id_surat)
+	public function edit_surat($id_surat = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$this->data['title'] = "Referensi - Edit Jenis Naskah";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['jenis_surat'] = $this->All_model->getSurat($id_surat);
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/edt_surat', $this->data);
-			$this->load->view('master/footer', $this->data);
+			$surat = $this->All_model->getSurat($id_surat);
+			if (!empty($surat)) {
+				$this->data['title'] = "Referensi - Edit Jenis Naskah";
+				$this->data['active'] = "8";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['jenis_surat'] = $surat;
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/referensi/edt_surat', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function proses_edit_jenis_surat()
@@ -594,20 +661,24 @@ class Referensi extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->editJenisSurat()) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 				redirect('referensi/jenis_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 				redirect('referensi/edit_surat');
 			}
 		}
 	}
-	public function hapus_surat($id)
+	public function hapus_surat($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->All_model->hapusJenisSurat($id)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
 				redirect('referensi/jenis_surat');
 			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 				redirect('referensi/jenis_surat');
 			}
 		}

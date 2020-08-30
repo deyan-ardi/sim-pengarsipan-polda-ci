@@ -463,7 +463,10 @@ class Ion_auth_model extends CI_Model
 
 		return $return;
 	}
-
+	public function getAccount($id)
+	{
+		return $this->db->where('user_id =', $id)->where('group_id = 1')->get('users_groups')->num_rows();
+	}
 	/**
 	 * Clear the forgotten password code for a user
 	 *

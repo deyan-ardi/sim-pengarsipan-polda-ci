@@ -2,14 +2,14 @@
 </div>
 <!-- footer content -->
 <?php if ($active != "0") { ?>
-	<footer>
-		<div class="pull-right">
-			<strong>© SIAP BALI.</strong> All right reserved
-		</div>
-		<div class="clearfix"></div>
-	</footer>
-	</div>
-	</div>
+<footer>
+    <div class="pull-right">
+        <strong>© SIAP BALI.</strong> All right reserved
+    </div>
+    <div class="clearfix"></div>
+</footer>
+</div>
+</div>
 <?php } ?>
 
 <!-- /footer content -->
@@ -53,8 +53,11 @@
 <script src="<?= base_url() ?>assets/template/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 <!-- Custom Theme Scripts -->
+<script src="<?= base_url() ?>assets/js/sweetalert2.js"></script>
 <script src="<?= base_url() ?>assets/template/build/js/custom.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
+<!-- Sweetalert -->
+
 </body>
 
 </html>

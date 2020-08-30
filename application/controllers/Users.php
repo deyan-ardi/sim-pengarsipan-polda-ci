@@ -73,38 +73,49 @@ class Users extends CI_Controller
 				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 				if ($upload['result'] == "success") {
 					if ($this->All_model->editProfil($upload, $id_edit)) {
+						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 						redirect('users/profile');
 					} else {
+						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 						redirect('users/edit_profile');
 					}
 				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 					redirect('users/edit_profile');
 					// var_dump($upload);
 					// show_error($upload);
 				}
 			} else {
 				if ($this->All_model->editProfilFile($id_edit)) {
+					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 					redirect('users/profile');
 				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
 					redirect('users/edit_profile');
 				}
 			}
 		}
 	}
-	public function rm_user($id)
+	public function rm_user($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->ion_auth->is_admin()) {
 				//list the users
-				$hapus = $this->ion_auth_model->hapus_user($id);
-				if ($hapus) {
-					$this->session->set_flashdata('berhasil', 'Dihapus');
+				$account = $this->ion_auth_model->getAccount($id);
+				if ($account > 0) {
+					$this->session->set_flashdata('gagal', "Can't Remove Admin");
 					redirect('users', 'refresh');
 				} else {
-					$this->session->set_flashdata('gagal', 'Dihapus');
-					redirect('users', 'refresh');
+					$hapus = $this->ion_auth_model->hapus_user($id);
+					if ($hapus) {
+						$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
+						redirect('users', 'refresh');
+					} else {
+						$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
+						redirect('users', 'refresh');
+					}
 				}
 			} else {
 				redirect('users/profile', 'refresh');
