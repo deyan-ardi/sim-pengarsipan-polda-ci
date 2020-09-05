@@ -95,9 +95,6 @@
                                      <center>
                                          <a href="<?= base_url() ?>surat/print_surat_keluar/<?= $data['id'] ?>"
                                              class="btn btn-primary" title="Print"><i class="fa fa fa-print"></i></a>
-                                         <a href="<?= base_url() ?>surat/edit_surat_keluar/<?= $data['id'] ?>"
-                                             class="btn btn-warning" title="Edit"><i
-                                                 class="fa fa-pencil-square-o"></i></a>
                                      </center>
                                      <?php } ?>
                                  </td>

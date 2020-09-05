@@ -41,6 +41,7 @@ $config['database_group_name'] = '';
 */
 $config['tables']['users']           = 'users';
 $config['tables']['groups']          = 'groups';
+$config['tables']['satker']          = 'satker';
 $config['tables']['users_groups']    = 'users_groups';
 $config['tables']['login_attempts']  = 'login_attempts';
 

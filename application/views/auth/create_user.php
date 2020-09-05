@@ -58,22 +58,22 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Awal<span
-                                    class="required">&nbsp; :</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">NRP<span class="required">&nbsp;
+                                    :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="number" min="0" name="nrp" class="form-control col-md-7 col-xs-12"
+                                    required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama User<span
+                                    class="required">&nbsp;
+                                    :</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="first_name" class="form-control col-md-7 col-xs-12"
                                     required="required">
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Akhir<span
-                                    class="required">&nbsp; :</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="last_name" class="form-control col-md-7 col-xs-12"
-                                    required="required">
-                            </div>
-                        </div>
-
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Jenis Kelamin<span
                                     class="required">&nbsp; :</span></label>
@@ -87,13 +87,44 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nomor Telepon/WA<span
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Pangkat<span
                                     class="required">&nbsp; :</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="phone" class="form-control col-md-7 col-xs-12"
+                                <input type="text" name="pangkat" class="form-control col-md-7 col-xs-12"
                                     required="required">
                             </div>
                         </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Jabatan<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="jabatan" class="form-control col-md-7 col-xs-12"
+                                    required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nomor Telepon/WA<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="number" name="phone" class="form-control col-md-7 col-xs-12"
+                                    required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Satuan Kerja<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="satuan_kerja" id="satker" class="form-control col-md-7 col-xs-12"
+                                    required="required">
+                                    <option value="">Pilih Satuan Kerja</option>
+                                    <?php foreach ($satker as $data) : ?>
+                                    <option value="<?= $data['id_satker'] ?>"><?= $data['kode_satker'] ?> -
+                                        <?= $data['nama_satker'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Password<span
                                     class="required">&nbsp; :</span></label>

@@ -23,22 +23,6 @@ class Referensi extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
-	public function tmb_pegawai()
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$this->data['title'] = "Referensi - Tambah Pegawai";
-			$this->data['active'] = "8";
-			$id = $_SESSION['user_id'];
-			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['satker'] = $this->All_model->getAllSatker();
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->load->view('master/header', $this->data);
-			$this->load->view('page/admin/referensi/tmb_pegawai', $this->data);
-			$this->load->view('master/footer', $this->data);
-		}
-	}
 	public function pegawai()
 	{
 		if (!$this->ion_auth->logged_in()) {
@@ -55,105 +39,6 @@ class Referensi extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
-	public function proses_tmb_pegawai()
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$agenda = date('YmdHis');
-			$nama_baru = strtolower($agenda);
-			$id_surat = "pegawai";
-			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
-			if ($upload['result'] == "success") {
-				if ($this->All_model->inputPegawai($upload)) {
-					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
-					redirect('referensi');
-				} else {
-					$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
-					redirect('referensi/tmb_pegawai');
-				}
-			} else {
-				// var_dump($upload);
-				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
-				redirect('referensi/tmb_pegawai');
-			}
-		}
-	}
-	public function edit_pegawai($id_pegawai = '')
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$pegawai = $this->All_model->getPegawai($id_pegawai);
-			if (!empty($pegawai)) {
-				$this->data['title'] = "Referensi - Edit Data Pegawai";
-				$this->data['active'] = "8";
-				$id = $_SESSION['user_id'];
-				$this->data['users'] = $this->All_model->getUsers($id);
-				$pegawai = $this->All_model->getPegawai($id_pegawai);
-				$this->data['pegawai'] = $pegawai;
-				$this->data['satker'] = $this->All_model->getAllSatker();
-				$this->data['group'] = $this->ion_auth_model->getGroup($id);
-				$this->load->view('master/header', $this->data);
-				$this->load->view('page/admin/referensi/edt_pegawai', $this->data);
-				$this->load->view('master/footer', $this->data);
-			} else {
-				show_404();
-			}
-		}
-	}
-	public function proses_edit_pegawai()
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$nama_baru = $_POST['file_old'];
-			$id_surat = "pegawai";
-			$id_edit = $_POST['id'];
-			if ($_FILES["file"]['error'] != 4) {
-				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
-				if ($upload['result'] == "success") {
-					$data = $upload['file']['file_name'];
-					if ($this->All_model->editPegawai($data, $id_edit)) {
-						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
-						redirect('referensi');
-					} else {
-						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-						redirect('referensi/edit_pegawai/' . $id_edit);
-					}
-				} else {
-					// var_dump($upload);
-					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-					redirect('referensi/edit_pegawai/' . $id_edit);
-				}
-			} else {
-				$data = $_POST['file_old'];
-				if ($this->All_model->editPegawai($data, $id_edit)) {
-					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
-					redirect('referensi');
-				} else {
-					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-					redirect('referensi/edit_pegawai/' . $id_edit);
-				}
-			}
-		}
-	}
-	public function hapus_pegawai($id = '')
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			if ($this->All_model->hapusPegawai($id)) {
-				$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
-				redirect('referensi');
-			} else {
-				$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
-				redirect('referensi');
-			}
-		}
-	}
-
-
 
 
 	// Jenis Naskah

@@ -1302,20 +1302,27 @@ class Ion_auth_model extends CI_Model
 	public function users($groups = NULL)
 	{
 		$this->trigger_events('users');
-
+		$this->trigger_events('satker');
 		if (isset($this->_ion_select) && !empty($this->_ion_select)) {
 			foreach ($this->_ion_select as $select) {
 				$this->db->select($select);
 			}
-
 			$this->_ion_select = [];
 		} else {
 			// default selects
 			$this->db->select([
 				$this->tables['users'] . '.*',
+				$this->tables['satker'] . '.kode_satker',
+				$this->tables['satker'] . '.nama_satker',
 				$this->tables['users'] . '.id as id',
-				$this->tables['users'] . '.id as user_id'
+				$this->tables['users'] . '.id as user_id',
+
 			]);
+			$this->db->join(
+				$this->tables['satker'],
+				$this->tables['satker'] . '.id_satker' .  '=' . $this->tables['users'] . '.id_satker',
+				'inner'
+			);
 		}
 
 		// filter by group id(s) if passed
@@ -1390,9 +1397,7 @@ class Ion_auth_model extends CI_Model
 			$this->_ion_order    = NULL;
 			$this->_ion_order_by = NULL;
 		}
-
 		$this->response = $this->db->get($this->tables['users']);
-
 		return $this;
 	}
 

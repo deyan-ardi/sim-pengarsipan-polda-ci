@@ -31,10 +31,19 @@
 	                                </th>
 	                                <th style="vertical-align: middle;">Foto</th>
 	                                <th style=" vertical-align: middle;">
-	                                    <center>Nama Depan</center>
+	                                    <center>NRP</center>
 	                                </th>
 	                                <th style="vertical-align: middle;">
-	                                    <center>Nama Belakang</center>
+	                                    <center>Nama User</center>
+	                                </th>
+	                                <th style="vertical-align: middle;">
+	                                    <center>Pangkat</center>
+	                                </th>
+	                                <th style="vertical-align: middle;">
+	                                    <center>Jabatan</center>
+	                                </th>
+	                                <th style="vertical-align: middle;">
+	                                    <center>Satuan Kerja</center>
 	                                </th>
 	                                <th style="vertical-align: middle;">
 	                                    <center>Level</center>
@@ -60,8 +69,12 @@
 	                                <td><?php echo htmlspecialchars($user->username, ENT_QUOTES, 'UTF-8'); ?></td>
 	                                <td><img src="<?= base_url() ?>assets/upload/users/<?= $user->gambar ?>" alt="gambar"
 	                                        width="50px"></td>
+	                                <td><?php echo htmlspecialchars($user->nrp, ENT_QUOTES, 'UTF-8'); ?></td>
 	                                <td><?php echo htmlspecialchars($user->first_name, ENT_QUOTES, 'UTF-8'); ?></td>
-	                                <td><?php echo htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8'); ?></td>
+	                                <td><?php echo htmlspecialchars($user->pangkat, ENT_QUOTES, 'UTF-8'); ?></td>
+	                                <td><?php echo htmlspecialchars($user->jabatan, ENT_QUOTES, 'UTF-8'); ?></td>
+	                                <td><?php echo htmlspecialchars($user->kode_satker, ENT_QUOTES, 'UTF-8'); ?> -
+	                                    <?php echo htmlspecialchars($user->nama_satker, ENT_QUOTES, 'UTF-8'); ?></td>
 	                                <td>
 	                                    <?php foreach ($user->groups as $group) : ?>
 	                                    <?php echo anchor("auth/edit_group/" . $group->id, '<button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o"></i> ' . $group->name . '</button>', ENT_QUOTES, 'UTF-8'); ?><br />
@@ -78,6 +91,7 @@
 	                                    <a href="<?= base_url() ?>users/rm_user/<?= $user->id ?>"
 	                                        class="btn btn-danger btn-sm tombol-hapus" title="Hapus"><i
 	                                            class="fa fa-trash-o"></i></a>
+	                                </td>
 	                            </tr>
 
 	                            <?php endforeach; ?>

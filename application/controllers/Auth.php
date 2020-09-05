@@ -452,14 +452,17 @@ class Auth extends CI_Controller
 
 				// validate form input
 				$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
-				$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim|required');
+				$this->form_validation->set_rules('nrp', 'The Field NRP is Required', 'trim|required|integer');
+				$this->form_validation->set_rules('pangkat', 'The Field Pangkat is Required', 'trim|required');
+				$this->form_validation->set_rules('jabatan', 'The Field Jabatan is Required', 'trim|required');
+				$this->form_validation->set_rules('satuan_kerja', 'The Field Satuan Kerja is Required', 'trim|required');
 				if ($identity_column !== 'email') {
 					$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
 				} else {
 					$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
 				}
-				$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim');
-				$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim');
+				$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|integer|required');
+				$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim|required');
 				$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|matches[password_confirm]');
 				$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -478,7 +481,10 @@ class Auth extends CI_Controller
 
 							$additional_data = [
 								'first_name' => $this->input->post('first_name'),
-								'last_name' => $this->input->post('last_name'),
+								'nrp' => $this->input->post('nrp'),
+								'pangkat' => $this->input->post('pangkat'),
+								'jabatan' => $this->input->post('jabatan'),
+								'id_satker' => $this->input->post('satuan_kerja'),
 								'jenis_kelamin' => $this->input->post('jenis_kelamin'),
 								'phone' => $this->input->post('phone'),
 								'gambar' => $upload['file']['file_name'],
@@ -498,61 +504,12 @@ class Auth extends CI_Controller
 					// display the create user form
 					// set the flash data error message if there is one
 					$this->data['message'] = (validation_errors() ? validation_errors() : (strip_tags($this->ion_auth->errors()) ? strip_tags($this->ion_auth->errors()) : $this->session->flashdata('gagal')));
-
-					$this->data['first_name'] = [
-						'name' => 'first_name',
-						'id' => 'first_name',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('first_name'),
-					];
-					$this->data['last_name'] = [
-						'name' => 'last_name',
-						'id' => 'last_name',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('last_name'),
-					];
-					$this->data['identity'] = [
-						'name' => 'identity',
-						'id' => 'identity',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('identity'),
-					];
-					$this->data['email'] = [
-						'name' => 'email',
-						'id' => 'email',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('email'),
-					];
-					$this->data['jenis_kelamin'] = [
-						'name' => 'jenis_kelamin',
-						'id' => 'jenis_kelamin',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('jenis_kelamin'),
-					];
-					$this->data['phone'] = [
-						'name' => 'phone',
-						'id' => 'phone',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('phone'),
-					];
-					$this->data['password'] = [
-						'name' => 'password',
-						'id' => 'password',
-						'type' => 'password',
-						'value' => $this->form_validation->set_value('password'),
-					];
-					$this->data['password_confirm'] = [
-						'name' => 'password_confirm',
-						'id' => 'password_confirm',
-						'type' => 'password',
-						'value' => $this->form_validation->set_value('password_confirm'),
-					];
-
 					$this->data['title'] = "Setelan Users - Tambah User";
 					$this->data['active'] = "4";
 					$id = $_SESSION['user_id'];
 					$this->data['users'] = $this->All_model->getUsers($id);
 					$this->data['group'] = $this->ion_auth_model->getGroup($id);
+					$this->data['satker'] = $this->All_model->getAllSatker();
 					$this->load->view('master/header', $this->data);
 					$this->load->view('auth/create_user', $this->data);
 					$this->load->view('master/footer', $this->data);

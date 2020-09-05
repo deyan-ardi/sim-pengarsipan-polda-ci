@@ -30,9 +30,11 @@
                                 <th>
                                     <center>Nama Satuan Kerja</center>
                                 </th>
+                                <?php if ($group[0]['group_id'] == "1") { ?>
                                 <th>
                                     <center>Fitur</center>
                                 </th>
+                                <?php  } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,8 +45,8 @@
                                 <td><?= $i++ ?></td>
                                 <td><?= $data['kode_satker'] ?></td>
                                 <td><?= $data['nama_satker'] ?></td>
+                                <?php if ($group[0]['group_id'] == "1") { ?>
                                 <td>
-                                    <?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "3") { ?>
                                     <center>
                                         <a href="<?= base_url() ?>referensi/edit_satker/<?= $data['id_satker'] ?>"
                                             class="btn btn-warning" title="Edit"><i
@@ -53,14 +55,8 @@
                                             class="btn btn-danger tombol-hapus" title="Hapus"><i
                                                 class="fa fa-trash-o"></i></a>
                                     </center>
-                                    <?php } else { ?>
-                                    <center>
-                                        <a href="<?= base_url() ?>referensi/edit_satker/<?= $data['id_satker'] ?>"
-                                            class="btn btn-warning" title="Edit"><i
-                                                class="fa fa-pencil-square-o"></i></a>
-                                    </center>
-                                    <?php } ?>
                                 </td>
+                                <?php } ?>
                             </tr>
 
                             <?php endforeach ?>

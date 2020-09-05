@@ -177,9 +177,11 @@ class All_model extends CI_Model
 	}
 	public function getAllPegawai()
 	{
-		$this->db->select('*');
-		$this->db->from('pegawai');
-		$this->db->join('satker', 'pegawai.id_satker = satker.id_satker');
+		$this->db->select('users.*,satker.kode_satker,satker.nama_satker');
+		$this->db->from('users');
+		$this->db->join('satker', 'users.id_satker = satker.id_satker');
+		$this->db->join('users_groups', 'users_groups.user_id = users.id');
+		$this->db->where('users_groups.group_id != 1');
 		return $this->db->get()->result_array();
 	}
 
@@ -615,6 +617,7 @@ class All_model extends CI_Model
 	{
 		$this->db->select('surat_masuk.id as id_surat,surat_masuk.no_agenda,surat_masuk.no_surat,nama_jenis,nama_klasifikasi,kode_arsip.kode_arsip,surat_masuk.tanggal_surat,surat_masuk.tanggal_terima,nama_satker,surat_masuk.perihal,surat_masuk.isi_ringkas,surat_masuk.lampiran,surat_masuk.keterangan,surat_masuk.file,jenis_naskah');
 		$this->db->where('surat_masuk.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('dari_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"');
+		$this->db->or_where('surat_masuk.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('dari_tanggal', true)) . '"');
 		$this->db->from('surat_masuk');
 		$this->db->join('satker', 'surat_masuk.asal_surat = satker.id_satker');
 		$this->db->join('jenis_surat', 'surat_masuk.jenis_surat = jenis_surat.id');
@@ -628,6 +631,7 @@ class All_model extends CI_Model
 		$this->db->select('surat_keluar.id,surat_keluar.no_agenda,surat_keluar.no_surat,nama_jenis,nama_klasifikasi,kode_arsip.kode_arsip,surat_keluar.tanggal_surat,surat_keluar.tanggal_kirim,surat_keluar.tujuan,surat_keluar.perihal,surat_keluar.isi_ringkas,surat_keluar.lampiran,surat_keluar.keterangan,surat_keluar.file,jenis_naskah, username');
 		$this->db->from('surat_keluar');
 		$this->db->where('surat_keluar.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('dari_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"');
+		$this->db->or_where('surat_keluar.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('dari_tanggal', true)) . '"');
 		$this->db->join('jenis_surat', 'surat_keluar.jenis_surat = jenis_surat.id');
 		$this->db->join('klasifikasi_surat', 'surat_keluar.klasifikasi_surat = klasifikasi_surat.id');
 		$this->db->join('kode_arsip', 'surat_keluar.kode_arsip = kode_arsip.id');

@@ -70,20 +70,20 @@
                                      class="required">&nbsp;</span></label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
                                  <?php
-									$biasa = '';
-									$penting = '';
-									$segera = '';
-									$rahasia = '';
-									if ($disposisi[0]['sifat'] == "Biasa") {
-										$biasa = "selected";
-									} else if ($disposisi[0]['sifat'] == "Penting") {
-										$penting = "selected";
-									} else if ($disposisi[0]['sifat'] == "Segera") {
-										$segera = "selected";
-									} else if ($disposisi[0]['sifat'] == "Rahasia") {
-										$rahasia = "selected";
-									}
-									?>
+                                    $biasa = '';
+                                    $penting = '';
+                                    $segera = '';
+                                    $rahasia = '';
+                                    if ($disposisi[0]['sifat'] == "Biasa") {
+                                        $biasa = "selected";
+                                    } else if ($disposisi[0]['sifat'] == "Penting") {
+                                        $penting = "selected";
+                                    } else if ($disposisi[0]['sifat'] == "Segera") {
+                                        $segera = "selected";
+                                    } else if ($disposisi[0]['sifat'] == "Rahasia") {
+                                        $rahasia = "selected";
+                                    }
+                                    ?>
                                  <select class="form-control col-md-7 col-xs-12" name="sifat" required="required">
                                      <option value="Biasa" <?= $biasa ?>>Biasa</option>
                                      <option value="Penting" <?= $penting ?>>Penting</option>
@@ -96,8 +96,9 @@
                              <label class="control-label col-md-3 col-sm-3 col-xs-12">Batas Waktu<span
                                      class="required">&nbsp;</span></label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                 <input type="date" name="batas_waktu" value="<?= $disposisi[0]['batas_waktu'] ?>"
-                                     class="form-control has-feedback-left" id="tanggal">
+                                 <input type="date" name="batas_waktu" min="<?= date('Y-m-d') ?>"
+                                     value="<?= $disposisi[0]['batas_waktu'] ?>" class="form-control has-feedback-left"
+                                     id="tanggal">
                                  <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                              </div>
                          </div>
