@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 14 Agu 2020 pada 17.19
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.4
+-- Generation Time: Sep 05, 2020 at 09:51 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_siap_baru`
+-- Database: `project_siap`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `disposisi`
+-- Table structure for table `disposisi`
 --
 
 CREATE TABLE `disposisi` (
@@ -32,18 +32,18 @@ CREATE TABLE `disposisi` (
   `no_agenda` varchar(20) NOT NULL,
   `id_surat` int(11) NOT NULL,
   `perihal` varchar(100) NOT NULL,
-  `file` varchar(50) NOT NULL,
-  `tujuan` varchar(50) NOT NULL,
+  `id_users` int(11) NOT NULL,
   `isi_disposisi` varchar(250) NOT NULL,
   `sifat` varchar(50) NOT NULL,
   `batas_waktu` date NOT NULL,
-  `catatan` varchar(250) NOT NULL
+  `catatan` varchar(250) NOT NULL,
+  `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `groups`
+-- Table structure for table `groups`
 --
 
 CREATE TABLE `groups` (
@@ -53,7 +53,7 @@ CREATE TABLE `groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `groups`
+-- Dumping data for table `groups`
 --
 
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jenis_naskah_dinas`
+-- Table structure for table `jenis_naskah_dinas`
 --
 
 CREATE TABLE `jenis_naskah_dinas` (
@@ -74,27 +74,17 @@ CREATE TABLE `jenis_naskah_dinas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jenis_naskah_dinas`
+-- Dumping data for table `jenis_naskah_dinas`
 --
 
 INSERT INTO `jenis_naskah_dinas` (`id`, `kode_naskah`, `jenis_naskah`) VALUES
 (18, 'NSKH001', 'naskah baru'),
-(19, 'NSKH002', 'Testing'),
-(20, 'NSKH003', 'TT'),
-(21, 'NSKH004', 'TT'),
-(22, 'NSKH005', 'T'),
-(23, 'NSKH006', 'TT'),
-(24, 'NSKH007', 'TT'),
-(25, 'NSKH008', 'TT'),
-(26, 'NSKH009', 'TT'),
-(27, 'NSKH010', 'TT'),
-(28, 'NSKH011', 'TT'),
-(29, 'NSKH012', 'TT');
+(19, 'NSKH002', 'Testing');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jenis_surat`
+-- Table structure for table `jenis_surat`
 --
 
 CREATE TABLE `jenis_surat` (
@@ -104,18 +94,17 @@ CREATE TABLE `jenis_surat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jenis_surat`
+-- Dumping data for table `jenis_surat`
 --
 
 INSERT INTO `jenis_surat` (`id`, `kode_surat`, `nama_jenis`) VALUES
 (4, 'SRT001', 'baru'),
-(5, 'SRT002', 'Test 2'),
-(7, 'SRT003', 'baru');
+(5, 'SRT002', 'Test 2');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `klasifikasi_surat`
+-- Table structure for table `klasifikasi_surat`
 --
 
 CREATE TABLE `klasifikasi_surat` (
@@ -126,7 +115,7 @@ CREATE TABLE `klasifikasi_surat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `klasifikasi_surat`
+-- Dumping data for table `klasifikasi_surat`
 --
 
 INSERT INTO `klasifikasi_surat` (`id`, `kode_klasifikasi`, `derajat`, `nama_klasifikasi`) VALUES
@@ -136,7 +125,7 @@ INSERT INTO `klasifikasi_surat` (`id`, `kode_klasifikasi`, `derajat`, `nama_klas
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kode_arsip`
+-- Table structure for table `kode_arsip`
 --
 
 CREATE TABLE `kode_arsip` (
@@ -149,7 +138,7 @@ CREATE TABLE `kode_arsip` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `kode_arsip`
+-- Dumping data for table `kode_arsip`
 --
 
 INSERT INTO `kode_arsip` (`id`, `kode_arsip`, `nama_arsip`, `primer`, `sekunder`, `tersier`) VALUES
@@ -160,7 +149,7 @@ INSERT INTO `kode_arsip` (`id`, `kode_arsip`, `nama_arsip`, `primer`, `sekunder`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `login_attempts`
+-- Table structure for table `login_attempts`
 --
 
 CREATE TABLE `login_attempts` (
@@ -173,23 +162,7 @@ CREATE TABLE `login_attempts` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawai`
---
-
-CREATE TABLE `pegawai` (
-  `id` int(11) NOT NULL,
-  `gambar` text NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `nrp` int(6) NOT NULL,
-  `pangkat` varchar(50) NOT NULL,
-  `jabatan` varchar(50) NOT NULL,
-  `id_satker` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `satker`
+-- Table structure for table `satker`
 --
 
 CREATE TABLE `satker` (
@@ -199,7 +172,7 @@ CREATE TABLE `satker` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `satker`
+-- Dumping data for table `satker`
 --
 
 INSERT INTO `satker` (`id_satker`, `kode_satker`, `nama_satker`) VALUES
@@ -210,13 +183,13 @@ INSERT INTO `satker` (`id_satker`, `kode_satker`, `nama_satker`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `surat_keluar`
+-- Table structure for table `surat_keluar`
 --
 
 CREATE TABLE `surat_keluar` (
   `id` int(10) NOT NULL,
   `no_agenda` varchar(20) NOT NULL,
-  `no_surat` int(20) NOT NULL,
+  `no_surat` varchar(50) NOT NULL,
   `jenis_surat` int(11) NOT NULL,
   `klasifikasi_surat` int(11) NOT NULL,
   `kode_arsip` int(11) NOT NULL,
@@ -233,14 +206,7 @@ CREATE TABLE `surat_keluar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `surat_keluar`
---
-
-INSERT INTO `surat_keluar` (`id`, `no_agenda`, `no_surat`, `jenis_surat`, `klasifikasi_surat`, `kode_arsip`, `tanggal_surat`, `tanggal_kirim`, `tujuan`, `perihal`, `isi_ringkas`, `lampiran`, `keterangan`, `file`, `jenis_naskah_dinas`, `id_user`) VALUES
-(5, '20200814231822', 1234, 5, 6, 7, '2020-08-04', '2020-08-14 23:18:22', 'Ada Deh', 'Ada Deh', 'Pas', 2, 'ada', '20200814231822.pdf', 19, 1);
-
---
--- Trigger `surat_keluar`
+-- Triggers `surat_keluar`
 --
 DELIMITER $$
 CREATE TRIGGER `triger_waktu` BEFORE INSERT ON `surat_keluar` FOR EACH ROW BEGIN
@@ -254,13 +220,13 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `surat_masuk`
+-- Table structure for table `surat_masuk`
 --
 
 CREATE TABLE `surat_masuk` (
   `id` int(10) NOT NULL,
   `no_agenda` varchar(20) NOT NULL,
-  `no_surat` int(20) NOT NULL,
+  `no_surat` varchar(50) NOT NULL,
   `jenis_surat` int(11) NOT NULL,
   `klasifikasi_surat` int(11) NOT NULL,
   `kode_arsip` int(11) NOT NULL,
@@ -276,14 +242,14 @@ CREATE TABLE `surat_masuk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `surat_masuk`
+-- Dumping data for table `surat_masuk`
 --
 
 INSERT INTO `surat_masuk` (`id`, `no_agenda`, `no_surat`, `jenis_surat`, `klasifikasi_surat`, `kode_arsip`, `tanggal_surat`, `tanggal_terima`, `asal_surat`, `perihal`, `isi_ringkas`, `lampiran`, `keterangan`, `file`, `jenis_naskah_dinas`) VALUES
-(13, '20200814231455', 1234, 4, 6, 7, '2020-08-13', '2020-08-14 23:14:55', 9, '123', 'ada deh', 2, 'ada', '20200814231455.pdf', 18);
+(16, '20200905105234', '10/20/POLDA BALI/2020', 4, 7, 7, '2020-09-04', '2020-09-05 10:52:34', 9, 'Adadeh', 'ada', 2, 'dada', '20200905105234.pdf', 18);
 
 --
--- Trigger `surat_masuk`
+-- Triggers `surat_masuk`
 --
 DELIMITER $$
 CREATE TRIGGER `trigger_tanggal_terima` BEFORE INSERT ON `surat_masuk` FOR EACH ROW BEGIN
@@ -297,7 +263,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -317,23 +283,26 @@ CREATE TABLE `users` (
   `last_login` int(11) UNSIGNED DEFAULT NULL,
   `active` tinyint(1) UNSIGNED DEFAULT NULL,
   `gambar` varchar(100) NOT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
+  `first_name` varchar(150) DEFAULT NULL,
+  `nrp` varchar(50) DEFAULT NULL,
+  `pangkat` varchar(50) NOT NULL,
+  `jabatan` varchar(50) NOT NULL,
+  `id_satker` int(11) NOT NULL,
   `jenis_kelamin` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `gambar`, `first_name`, `last_name`, `jenis_kelamin`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$12$KCnFuVXmjd0pdXxmP/wAeu6pG2ZJCZklE/wpvBgCTOGhnPLXXXdiO', 'admin@admin.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1268889823, 1597400871, 1, '20200813163136.png', 'Admin Web Inti', 'istrator', 'Laki-Laki', '081915656865');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `gambar`, `first_name`, `nrp`, `pangkat`, `jabatan`, `id_satker`, `jenis_kelamin`, `phone`) VALUES
+(32, '127.0.0.1', 'administrator', '$2y$12$qlDSg5C43Puepq1vkvqO6.cC6cZzafIYok5.vwZvGr..IweML3GQq', 'admin@admin.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1268889823, 1599292161, 1, '20200830234118.png', 'Admin Web Inti', 'istrator', '', '', 9, 'Laki-Laki', '081915656865');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users_groups`
+-- Table structure for table `users_groups`
 --
 
 CREATE TABLE `users_groups` (
@@ -343,75 +312,69 @@ CREATE TABLE `users_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `users_groups`
+-- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(36, 1, 1);
+(52, 32, 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `disposisi`
+-- Indexes for table `disposisi`
 --
 ALTER TABLE `disposisi`
   ADD PRIMARY KEY (`id_disp`),
-  ADD KEY `id_surat` (`id_surat`);
+  ADD KEY `id_surat` (`id_surat`),
+  ADD KEY `fk_users_disposisi` (`id_users`);
 
 --
--- Indeks untuk tabel `groups`
+-- Indexes for table `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jenis_naskah_dinas`
+-- Indexes for table `jenis_naskah_dinas`
 --
 ALTER TABLE `jenis_naskah_dinas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jenis_surat`
+-- Indexes for table `jenis_surat`
 --
 ALTER TABLE `jenis_surat`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indeks untuk tabel `klasifikasi_surat`
+-- Indexes for table `klasifikasi_surat`
 --
 ALTER TABLE `klasifikasi_surat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `kode_arsip`
+-- Indexes for table `kode_arsip`
 --
 ALTER TABLE `kode_arsip`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `login_attempts`
+-- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pegawai`
---
-ALTER TABLE `pegawai`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_satker` (`id_satker`);
-
---
--- Indeks untuk tabel `satker`
+-- Indexes for table `satker`
 --
 ALTER TABLE `satker`
   ADD PRIMARY KEY (`id_satker`);
 
 --
--- Indeks untuk tabel `surat_keluar`
+-- Indexes for table `surat_keluar`
 --
 ALTER TABLE `surat_keluar`
   ADD PRIMARY KEY (`id`),
@@ -423,7 +386,7 @@ ALTER TABLE `surat_keluar`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indeks untuk tabel `surat_masuk`
+-- Indexes for table `surat_masuk`
 --
 ALTER TABLE `surat_masuk`
   ADD PRIMARY KEY (`id`),
@@ -434,17 +397,18 @@ ALTER TABLE `surat_masuk`
   ADD KEY `surat_masuk_saker` (`asal_surat`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uc_email` (`email`),
   ADD UNIQUE KEY `uc_activation_selector` (`activation_selector`),
   ADD UNIQUE KEY `uc_forgotten_password_selector` (`forgotten_password_selector`),
-  ADD UNIQUE KEY `uc_remember_selector` (`remember_selector`);
+  ADD UNIQUE KEY `uc_remember_selector` (`remember_selector`),
+  ADD KEY `fk_satker_users` (`id_satker`);
 
 --
--- Indeks untuk tabel `users_groups`
+-- Indexes for table `users_groups`
 --
 ALTER TABLE `users_groups`
   ADD PRIMARY KEY (`id`),
@@ -453,105 +417,94 @@ ALTER TABLE `users_groups`
   ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `disposisi`
+-- AUTO_INCREMENT for table `disposisi`
 --
 ALTER TABLE `disposisi`
-  MODIFY `id_disp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_disp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `groups`
+-- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `jenis_naskah_dinas`
+-- AUTO_INCREMENT for table `jenis_naskah_dinas`
 --
 ALTER TABLE `jenis_naskah_dinas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT untuk tabel `jenis_surat`
+-- AUTO_INCREMENT for table `jenis_surat`
 --
 ALTER TABLE `jenis_surat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `klasifikasi_surat`
+-- AUTO_INCREMENT for table `klasifikasi_surat`
 --
 ALTER TABLE `klasifikasi_surat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `kode_arsip`
+-- AUTO_INCREMENT for table `kode_arsip`
 --
 ALTER TABLE `kode_arsip`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `login_attempts`
+-- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawai`
---
-ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT untuk tabel `satker`
+-- AUTO_INCREMENT for table `satker`
 --
 ALTER TABLE `satker`
   MODIFY `id_satker` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT untuk tabel `surat_keluar`
+-- AUTO_INCREMENT for table `surat_keluar`
 --
 ALTER TABLE `surat_keluar`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `surat_masuk`
+-- AUTO_INCREMENT for table `surat_masuk`
 --
 ALTER TABLE `surat_masuk`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT untuk tabel `users_groups`
+-- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `disposisi`
+-- Constraints for table `disposisi`
 --
 ALTER TABLE `disposisi`
-  ADD CONSTRAINT `disposisi_ibfk_1` FOREIGN KEY (`id_surat`) REFERENCES `surat_masuk` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `disposisi_ibfk_1` FOREIGN KEY (`id_surat`) REFERENCES `surat_masuk` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_users_disposisi` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pegawai`
---
-ALTER TABLE `pegawai`
-  ADD CONSTRAINT `pegawai_ibfk_1` FOREIGN KEY (`id_satker`) REFERENCES `satker` (`id_satker`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `surat_keluar`
+-- Constraints for table `surat_keluar`
 --
 ALTER TABLE `surat_keluar`
   ADD CONSTRAINT `surat_keluar_ibfk_1` FOREIGN KEY (`jenis_surat`) REFERENCES `jenis_surat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -561,7 +514,7 @@ ALTER TABLE `surat_keluar`
   ADD CONSTRAINT `surat_keluar_ibfk_6` FOREIGN KEY (`kode_arsip`) REFERENCES `kode_arsip` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `surat_masuk`
+-- Constraints for table `surat_masuk`
 --
 ALTER TABLE `surat_masuk`
   ADD CONSTRAINT `surat_masuk_ibfk_1` FOREIGN KEY (`jenis_surat`) REFERENCES `jenis_surat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -571,7 +524,13 @@ ALTER TABLE `surat_masuk`
   ADD CONSTRAINT `surat_masuk_saker` FOREIGN KEY (`asal_surat`) REFERENCES `satker` (`id_satker`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `users_groups`
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_satker_users` FOREIGN KEY (`id_satker`) REFERENCES `satker` (`id_satker`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users_groups`
 --
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1_idx	` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,

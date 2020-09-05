@@ -51,6 +51,12 @@
                                 <th style="vertical-align: middle;">
                                     <center>Action</center>
                                 </th>
+                                <th style="vertical-align: middle;">
+                                    <center>Tipe</center>
+                                </th>
+                                <th style="vertical-align: middle;">
+                                    <center>Dikirim Oleh</center>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,14 +65,14 @@
                             foreach ($surat as $data) : ?>
                             <tr>
                                 <td><?= $i++ ?></td>
-                                <td><?= $data['no_agenda'] ?>,<br><?= $data['nomor_agenda'] ?> -
+                                <td><?= $data['no_agenda'] ?> -
                                     <?= $data['no_surat'] ?></td>
                                 <td><?= $data['perihal'] ?></td>
-                                <td><?= $data['tujuan'] ?></td>
+                                <td><?= $data['first_name'] ?> - <?= $data['jabatan'] ?> </td>
                                 <td><?= $data['isi_disposisi'] ?></td>
                                 <td><?= $data['sifat'] ?>,<br><?= $data['batas_waktu'] ?></td>
                                 <td><?= $data['catatan'] ?></td>
-                                <td><a href="<?= base_url() ?>assets/upload/disposisi/<?= $data['file'] ?>"
+                                <td><a href="<?= base_url() ?>assets/upload/surat_masuk/<?= $data['file'] ?>"
                                         target="blank"><?= $data['file'] ?></a></td>
                                 <td>
                                     <?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "3") { ?>
@@ -74,9 +80,11 @@
                                         <a href="<?= base_url() ?>surat/edit_disposisi/<?= $data['id_disp'] ?>"
                                             class="btn btn-warning" title="Edit"><i
                                                 class="fa fa-pencil-square-o"></i></a>
+                                        <?php if ($data['id_users'] != $_SESSION['user_id'] && $data['created_by'] == $_SESSION['user_id']) { ?>
                                         <a href="<?= base_url() ?>surat/hapus_disposisi/<?= $data['id_disp'] ?>"
                                             class="btn btn-danger tombol-hapus" title="Hapus"><i
                                                 class="fa fa-trash-o"></i></a>
+                                        <?php } ?>
                                         <a href="<?= base_url() ?>surat/print_disposisi/<?= $data['id_disp'] ?>"
                                             class="btn btn-primary" title="Print"><i class="fa fa fa-print"></i></a>
                                     </center>
@@ -86,6 +94,20 @@
                                             class="btn btn-primary" title="Print"><i class="fa fa fa-print"></i></a>
                                     </center>
                                     <?php } ?>
+                                </td>
+                                <td>
+                                    <?php if ($data['id_users'] == $_SESSION['user_id'] && $data['created_by'] != $_SESSION['user_id']) { ?>
+                                    <a href="#" class="btn btn-success" title="Disposisi Masuk">In</a>
+                                    <?php } else { ?>
+                                    <a href="#" class="btn btn-warning" title="Disposisi Keluar">Out</a>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php
+                                        $user = $this->All_model->getUsers($data['created_by']);
+                                        echo $user[0]['first_name'];
+                                        ?>
+
                                 </td>
                             </tr>
                             <?php endforeach ?>

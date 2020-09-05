@@ -184,7 +184,16 @@ class All_model extends CI_Model
 		$this->db->where('users_groups.group_id != 1');
 		return $this->db->get()->result_array();
 	}
-
+	public function getAllPegawaiWhere($id)
+	{
+		$this->db->select('users.*,satker.kode_satker,satker.nama_satker');
+		$this->db->from('users');
+		$this->db->join('satker', 'users.id_satker = satker.id_satker');
+		$this->db->join('users_groups', 'users_groups.user_id = users.id');
+		$this->db->where('users_groups.group_id != 1');
+		$this->db->where('users.id !=' . $id);
+		return $this->db->get()->result_array();
+	}
 	public function getPegawai($id)
 	{
 		$this->db->select('*');
@@ -484,48 +493,33 @@ class All_model extends CI_Model
 		}
 	}
 	// Disposisi
-	public function inputDisposisi($data, $agenda)
+	public function inputDisposisi($agenda)
 	{
 		$query = array(
 			'no_agenda' => $agenda,
 			'id_surat'	=> htmlspecialchars($this->input->post('no_surat', true)),
 			'perihal'	=> htmlspecialchars($this->input->post('perihal', true)),
-			'file'	=> $data['file']['file_name'],
-			'tujuan'	=> htmlspecialchars($this->input->post('tujuan', true)),
+			'id_users'	=> htmlspecialchars($this->input->post('tujuan', true)),
 			'isi_disposisi'	=> htmlspecialchars($this->input->post('isi_disposisi', true)),
 			'sifat'	=> htmlspecialchars($this->input->post('sifat', true)),
 			'batas_waktu'	=> htmlspecialchars($this->input->post('batas_waktu', true)),
 			'catatan'	=> htmlspecialchars($this->input->post('catatan', true)),
+			'created_by' => htmlspecialchars($this->input->post('id_user', true)),
 		);
 		return $this->db->insert('disposisi', $query);
 	}
-	public function editDisposisi($data, $id)
+	public function editDisposisi($id)
 	{
 		$query = array(
 			'no_agenda' => htmlspecialchars($this->input->post('agenda', true)),
 			'id_surat'	=> htmlspecialchars($this->input->post('no_surat', true)),
 			'perihal'	=> htmlspecialchars($this->input->post('perihal', true)),
-			'file'	=> $data['file']['file_name'],
-			'tujuan'	=> htmlspecialchars($this->input->post('tujuan', true)),
+			'id_users'	=> htmlspecialchars($this->input->post('tujuan', true)),
 			'isi_disposisi'	=> htmlspecialchars($this->input->post('isi_disposisi', true)),
 			'sifat'	=> htmlspecialchars($this->input->post('sifat', true)),
 			'batas_waktu'	=> htmlspecialchars($this->input->post('batas_waktu', true)),
 			'catatan'	=> htmlspecialchars($this->input->post('catatan', true)),
-		);
-		return $this->db->where('id_disp=' . $id)->update('disposisi', $query);
-	}
-	public function editDisposisiFile($id)
-	{
-		$query = array(
-			'no_agenda' => htmlspecialchars($this->input->post('agenda', true)),
-			'id_surat'	=> htmlspecialchars($this->input->post('no_surat', true)),
-			'perihal'	=> htmlspecialchars($this->input->post('perihal', true)),
-			'file'	=> htmlspecialchars($this->input->post('file', true)),
-			'tujuan'	=> htmlspecialchars($this->input->post('tujuan', true)),
-			'isi_disposisi'	=> htmlspecialchars($this->input->post('isi_disposisi', true)),
-			'sifat'	=> htmlspecialchars($this->input->post('sifat', true)),
-			'batas_waktu'	=> htmlspecialchars($this->input->post('batas_waktu', true)),
-			'catatan'	=> htmlspecialchars($this->input->post('catatan', true)),
+			'created_by' => htmlspecialchars($this->input->post('id_user', true)),
 		);
 		return $this->db->where('id_disp=' . $id)->update('disposisi', $query);
 	}
@@ -533,27 +527,28 @@ class All_model extends CI_Model
 	{
 		return $this->db->get('disposisi')->num_rows();
 	}
-	public function getAllDisposisi()
+	public function getAllDisposisi($id)
 	{
-		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,disposisi.perihal,disposisi.file,disposisi.tujuan,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan');
+		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_surat,disposisi.perihal,surat_masuk.file,disposisi.id_users,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan,users.first_name,users.jabatan,disposisi.created_by');
 		$this->db->from('disposisi');
 		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+		$this->db->join('users', 'disposisi.id_users = users.id');
+		$this->db->where('disposisi.id_users =' . $id);
+		$this->db->or_where('disposisi.created_by =' . $id);
 		return $this->db->get()->result_array();
 	}
 	public function getDisposisi($id)
 	{
-		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,surat_masuk.id as id_surat,disposisi.perihal,disposisi.file,disposisi.tujuan,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan');
+		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,surat_masuk.id as id_surat,disposisi.perihal,disposisi.id_users,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan,disposisi.created_by, users.first_name');
 		$this->db->where('disposisi.id_disp=' . $id);
 		$this->db->from('disposisi');
 		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+		$this->db->join('users', 'disposisi.id_users = users.id');
 		return $this->db->get()->result_array();
 	}
 	public function hapusDisposisi($id)
 	{
-		$row = $this->db->where('id_disp=', $id)->get('disposisi')->row();
-		if ($this->db->delete('disposisi', array('id_disp' => $id))) {
-			unlink('assets/upload/disposisi/' . $row->file);
-		}
+		return $this->db->delete('disposisi', array('id_disp' => $id));
 	}
 	// Users
 	public function getRowUsers()

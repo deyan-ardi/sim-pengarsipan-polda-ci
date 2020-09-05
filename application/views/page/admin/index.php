@@ -107,28 +107,44 @@
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
+                    <?php if (!empty($log_surat_masuk)) { ?>
                     No Agenda <strong><u><?= $log_surat_masuk[0]['no_agenda'] ?></u></strong> Telah di tambahkan ke
                     Surat Masuk.
+                    <?php } else { ?>
+                    <em>Belum Ada Aktifitas Terbaru</em>
+                    <?php } ?>
                 </div>
                 <div class="alert alert-info alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
+                    <?php if (!empty($log_surat_keluar)) { ?>
                     No Agenda <strong><u><?= $log_surat_keluar[0]['no_agenda'] ?></u></strong> Telah ditambahkan ke
                     Surat Keluar.
+                    <?php } else { ?>
+                    <em>Belum Ada Aktifitas Terbaru</em>
+                    <?php } ?>
                 </div>
 
                 <div class="alert alert-warning alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    No Agenda <strong><u><?= $log_surat_masuk[0]['no_agenda'] ?></u></strong> Telah Ditambahkan Ke
+                    <?php if (!empty($log_disposisi)) { ?>
+                    No Agenda <strong><u><?= $log_disposisi[0]['no_agenda'] ?></u></strong> Telah Ditambahkan Ke
                     Tujuan Disposisi terbaru.
+                    <?php } else { ?>
+                    <em>Belum Ada Aktifitas Terbaru</em>
+                    <?php } ?>
                 </div>
 
                 <div class="alert alert-danger  alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
+                    <?php if (!empty($log_users)) { ?>
                     User <strong><u><?= $log_users[0]['first_name'] ?></u></strong> Telah ditambahkan sebagai user /
                     pengguna.
+                    <?php } else { ?>
+                    <em>Belum Ada Aktifitas Terbaru</em>
+                    <?php } ?>
                 </div>
 
             </div>

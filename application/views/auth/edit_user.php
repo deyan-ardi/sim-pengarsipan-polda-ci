@@ -46,19 +46,19 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Awal<span
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">NRP<span class="required">&nbsp;
+                                    :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="nrp" class="form-control col-md-7 col-xs-12"
+                                    required="required" value="<?= $nrp['value'] ?>">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama User<span
                                     class="required">&nbsp; :</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="first_name" class="form-control col-md-7 col-xs-12"
                                     required="required" value="<?= $first_name['value'] ?>">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Akhir<span
-                                    class="required">&nbsp; :</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="last_name" class="form-control col-md-7 col-xs-12"
-                                    required="required" value="<?= $last_name['value'] ?>">
                             </div>
                         </div>
                         <div class="item form-group">
@@ -81,11 +81,46 @@
                             </div>
                         </div>
                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Pangkat<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="pangkat" value="<?= $pangkat['value'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Jabatan<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="jabatan" value="<?= $jabatan['value'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nomor Telepon/WA<span
                                     class="required">&nbsp; :</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" name="phone" class="form-control col-md-7 col-xs-12"
                                     required="required" value="<?= $phone['value'] ?>">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Satuan Kerja<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="satuan_kerja" id="satker" class="form-control col-md-7 col-xs-12"
+                                    required="required">
+                                    <option value="">Pilih Satuan Kerja</option>
+                                    <?php foreach ($satker as $data) : ?>
+                                    <?php if ($id_satker['value'] == $data['id_satker']) { ?>
+                                    <option value="<?= $data['id_satker'] ?>" selected><?= $data['kode_satker'] ?> -
+                                        <?= $data['nama_satker'] ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?= $data['id_satker'] ?>"><?= $data['kode_satker'] ?> -
+                                        <?= $data['nama_satker'] ?></option>
+                                    <?php } ?>
+                                    <?php endforeach ?>
+                                </select>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -102,6 +137,7 @@
                                 <input type="password" name="password_confirm" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
+
                         <?php if ($this->ion_auth->is_admin()) : ?>
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Level User<span

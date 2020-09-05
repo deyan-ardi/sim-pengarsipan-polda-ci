@@ -550,11 +550,13 @@ class Auth extends CI_Controller
 
 
 		// validate form input
-		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim|required');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('edit_user_validation_company_label'), 'trim');
-
+		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
+		$this->form_validation->set_rules('nrp', 'The Field NRP is Required', 'trim|required|integer');
+		$this->form_validation->set_rules('pangkat', 'The Field Pangkat is Required', 'trim|required');
+		$this->form_validation->set_rules('jabatan', 'The Field Jabatan is Required', 'trim|required');
+		$this->form_validation->set_rules('satuan_kerja', 'The Field Satuan Kerja is Required', 'trim|required');
+		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|integer|required');
+		$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim|required');
 		if (isset($_POST) && !empty($_POST)) {
 			// do we have a valid request?
 			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
@@ -571,9 +573,12 @@ class Auth extends CI_Controller
 				if ($_FILES["file"]['error'] == 4) {
 					$data = [
 						'first_name' => $this->input->post('first_name'),
-						'last_name' => $this->input->post('last_name'),
+						'nrp' => $this->input->post('nrp'),
 						'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+						'pangkat' => $this->input->post('pangkat'),
+						'jabatan' => $this->input->post('jabatan'),
 						'phone' => $this->input->post('phone'),
+						'id_satker' => $this->input->post('satuan_kerja'),
 						'gambar' => $this->input->post('old_file'),
 					];
 				} else {
@@ -583,9 +588,12 @@ class Auth extends CI_Controller
 					if ($upload['result'] == "success") {
 						$data = [
 							'first_name' => $this->input->post('first_name'),
-							'last_name' => $this->input->post('last_name'),
+							'nrp' => $this->input->post('nrp'),
 							'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+							'pangkat' => $this->input->post('pangkat'),
+							'jabatan' => $this->input->post('jabatan'),
 							'phone' => $this->input->post('phone'),
+							'id_satker' => $this->input->post('satuan_kerja'),
 							'gambar' => $upload['file']['file_name'],
 						];
 					}
@@ -632,24 +640,41 @@ class Auth extends CI_Controller
 			$this->data['user'] = $user;
 			$this->data['groups'] = $groups;
 			$this->data['currentGroups'] = $currentGroups;
-
 			$this->data['first_name'] = [
 				'name'  => 'first_name',
 				'id'    => 'first_name',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('first_name', $user->first_name),
 			];
-			$this->data['last_name'] = [
-				'name'  => 'last_name',
-				'id'    => 'last_name',
+			$this->data['nrp'] = [
+				'name'  => 'nrp',
+				'id'    => 'nrp',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('last_name', $user->last_name),
+				'value' => $this->form_validation->set_value('nrp', $user->nrp),
 			];
 			$this->data['jenis_kelamin'] = [
 				'name'  => 'jenis_kelamin',
 				'id'    => 'jenis_kelamin',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('jenis_kelamin', $user->jenis_kelamin),
+			];
+			$this->data['pangkat'] = [
+				'name'  => 'pangkat',
+				'id'    => 'pangkat',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('pangkat', $user->pangkat),
+			];
+			$this->data['jabatan'] = [
+				'name'  => 'jabatan',
+				'id'    => 'jabatan',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('jabatan', $user->jabatan),
+			];
+			$this->data['id_satker'] = [
+				'name'  => 'satuan_kerja',
+				'id'    => 'satker',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('id_satker', $user->id_satker),
 			];
 			$this->data['phone'] = [
 				'name'  => 'phone',
@@ -671,6 +696,7 @@ class Auth extends CI_Controller
 			$this->data['title'] = "Setelan Users - Edit User";
 			$this->data['active'] = "4";
 			$id = $_SESSION['user_id'];
+			$this->data['satker'] = $this->All_model->getAllSatker();
 			$this->data['users'] = $this->All_model->getUsers($id);
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);

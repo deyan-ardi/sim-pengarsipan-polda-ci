@@ -53,8 +53,18 @@
                                      class="required">&nbsp;
                                      :</span></label>
                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                 <input type="text" name="tujuan" value="<?= $disposisi[0]['tujuan'] ?>"
-                                     class="form-control col-md-7 col-xs-12" required="required">
+                                 <select name="tujuan" class="form-control col-md-7 col-xs-12">
+                                     <option value="">Pilih Tujuan Disposisi</option>
+                                     <?php foreach ($pegawai as $data) : ?>
+                                     <?php if ($disposisi[0]['id_users'] == $data['id']) { ?>
+                                     <option value="<?= $data['id'] ?>" selected><?= $data['first_name'] ?>
+                                         - <?= $data['jabatan'] ?> </option>
+                                     <?php } else { ?>
+                                     <option value="<?= $data['id'] ?>"><?= $data['first_name'] ?>
+                                         - <?= $data['jabatan'] ?> </option>
+                                     <?php } ?>
+                                     <?php endforeach; ?>
+                                 </select>
                              </div>
                          </div>
                          <div class="item form-group">
@@ -110,16 +120,9 @@
                                      required="required"><?= $disposisi[0]['catatan'] ?> </textarea>
                              </div>
                          </div>
-                         <div class="item form-group">
-                             <label class="control-label col-md-3 col-sm-3 col-xs-12">File<span class="required">&nbsp;
-                                     :</span></label>
-                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                 <input type="file" name="file" class="form-control col-md-7 col-xs-12">
-                             </div>
-                         </div>
                          <input type="hidden" value="<?= $disposisi[0]['id_disp'] ?>" name="id">
                          <input type="hidden" value="<?= $disposisi[0]['no_agenda'] ?>" name="agenda">
-                         <input type="hidden" value="<?= $disposisi[0]['file'] ?>" name="file">
+                         <input type="hidden" value="<?= $_SESSION['user_id']; ?>" name="id_user">
                          <div class="ln_solid"></div>
                          <div class="form-group">
                              <div class="col-md-6 col-md-offset-3 ">

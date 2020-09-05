@@ -65,7 +65,7 @@ class Surat extends CI_Controller
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
 			$this->data['users'] = $this->All_model->getUsers($id);
-			$this->data['surat'] = $this->All_model->getAllDisposisi();
+			$this->data['surat'] = $this->All_model->getAllDisposisi($id);
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);
 			$this->load->view('page/admin/surat/disposisi', $this->data);
@@ -301,6 +301,7 @@ class Surat extends CI_Controller
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
 			$this->data['users'] = $this->All_model->getUsers($id);
+			$this->data['pegawai'] = $this->All_model->getAllPegawaiWhere($id);
 			$this->data['surat'] = $this->All_model->getAllSuratMasuk();
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);
@@ -321,6 +322,7 @@ class Surat extends CI_Controller
 				$this->data['users'] = $this->All_model->getUsers($id);
 				$this->data['disposisi'] = $disposisi;
 				$this->data['surat'] = $this->All_model->getAllSuratMasuk();
+				$this->data['pegawai'] = $this->All_model->getAllPegawaiWhere($id);
 				$this->data['group'] = $this->ion_auth_model->getGroup($id);
 				$this->load->view('master/header', $this->data);
 				$this->load->view('page/admin/surat/edt_disposisi', $this->data);
@@ -335,33 +337,14 @@ class Surat extends CI_Controller
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
-			$nama_baru = $_POST['agenda'];
-			$id_surat = "disposisi";
 			$id_edit = $_POST['id'];
-			if ($_FILES["file"]['error'] != 4) {
-				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
-				if ($upload['result'] == "success") {
-					if ($this->All_model->editDisposisi($upload, $id_edit)) {
-						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
-						redirect('surat/disposisi');
-					} else {
-						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-						redirect('surat/edit_disposisi');
-					}
-					// var_dump($upload);
-				} else {
-					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-					redirect('surat/edit_disposisi');
-					// var_dump($upload);
-				}
+
+			if ($this->All_model->editDisposisi($id_edit)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+				redirect('surat/disposisi');
 			} else {
-				if ($this->All_model->editDisposisiFile($id_edit)) {
-					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
-					redirect('surat/disposisi');
-				} else {
-					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
-					redirect('surat/edit_disposisi');
-				}
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+				redirect('surat/edit_disposisi');
 			}
 		}
 	}
@@ -381,17 +364,9 @@ class Surat extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			$agenda = date('YmdHis');
-			$nama_baru = strtolower($agenda);
-			$id_surat = "disposisi";
-			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
-			if ($upload['result'] == "success") {
-				if ($this->All_model->inputDisposisi($upload, $agenda)) {
-					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
-					redirect('surat/disposisi');
-				} else {
-					$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
-					redirect('surat/tmb_disposisi');
-				}
+			if ($this->All_model->inputDisposisi($agenda)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
+				redirect('surat/disposisi');
 			} else {
 				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
 				redirect('surat/tmb_disposisi');
@@ -408,6 +383,24 @@ class Surat extends CI_Controller
 			redirect('surat/disposisi');
 		}
 	}
+	public function print_disposisi($id = '')
+	{
+		if (!$this->ion_auth->logged_in()) {
+			redirect('auth/login', 'refresh');
+		} else {
+			$this->data['title'] = "Transaksi Surat - Print Disposisi Masuk";
+			$this->data['active'] = "2";
+			$surat_data = $this->All_model->getDisposisi($id);
+			$user = $this->All_model->getUsers($surat_data[0]['created_by']);
+			$this->data['surat'] = $surat_data;
+			$this->data['users'] = $user;
+			if (!empty($surat_data) && !empty($user)) {
+				$this->load->view('page/admin/surat/print_disposisi', $this->data);
+			} else {
+				show_404();
+			}
+		}
+	}
 	public function print_surat_masuk($id = '')
 	{
 		if (!$this->ion_auth->logged_in()) {
@@ -415,8 +408,13 @@ class Surat extends CI_Controller
 		} else {
 			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
 			$this->data['active'] = "2";
-			$this->data['surat'] = $this->All_model->getSuratMasuk($id);
-			$this->load->view('page/admin/surat/print_disposisi_surat_masuk', $this->data);
+			$surat = $this->All_model->getSuratMasuk($id);
+			$this->data['surat'] = $surat;
+			if (!empty($surat)) {
+				$this->load->view('page/admin/surat/print_disposisi_surat_masuk', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 	public function print_surat_keluar($id = '')
@@ -426,8 +424,13 @@ class Surat extends CI_Controller
 		} else {
 			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
 			$this->data['active'] = "2";
-			$this->data['surat'] = $this->All_model->getSuratKeluar($id);
-			$this->load->view('page/admin/surat/print_disposisi_surat_keluar', $this->data);
+			$surat = $this->All_model->getSuratKeluar($id);
+			$this->data['surat'] = $surat;
+			if (!empty($surat)) {
+				$this->load->view('page/admin/surat/print_disposisi_surat_keluar', $this->data);
+			} else {
+				show_404();
+			}
 		}
 	}
 }

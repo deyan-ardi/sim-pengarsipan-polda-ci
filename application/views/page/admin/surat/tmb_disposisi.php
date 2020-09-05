@@ -47,8 +47,13 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tujuan<span class="required">&nbsp;
                                     :</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" name="tujuan" class="form-control col-md-7 col-xs-12"
-                                    required="required">
+                                <select name="tujuan" class="form-control col-md-7 col-xs-12">
+                                    <option value="">Pilih Tujuan Disposisi</option>
+                                    <?php foreach ($pegawai as $data) : ?>
+                                    <option value="<?= $data['id'] ?>"><?= $data['first_name'] ?>
+                                        - <?= $data['jabatan'] ?> </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="item form-group">
@@ -88,20 +93,15 @@
                                     required="required"></textarea>
                             </div>
                         </div>
-                        <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">File<span class="required">&nbsp;
-                                    :</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="file" name="file" class="form-control col-md-7 col-xs-12"
-                                    required="required">
-                            </div>
+                        <input type="hidden" value="<?= $_SESSION['user_id']; ?>" name="id_user">
+                        <div class=" ln_solid">
                         </div>
-                        <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3 ">
                                 <button type="reset" class="btn btn-default">Reset</button>
                                 <input type="submit" class="btn btn-success" value="Simpan" name="submit">
                             </div>
+
                         </div>
                     </form>
                 </div>
