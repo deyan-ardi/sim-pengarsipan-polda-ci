@@ -8,7 +8,7 @@
          <div class="animate form login_form">
              <section class="login_content">
                  <form action="<?= base_url() ?>auth/login" method="post">
-                     <h3>Please,</h3>
+                     <img src="<?= base_url() ?>assets/img/POLDA.png" width="75px">
                      <h3>Login To Your Account</h3>
 
                      <div>
@@ -33,9 +33,12 @@
                          <div>
                              <h2>SISTEM INFORMASI ARSIP PERSURATAN</h2>
                              <h2>(SIAP BALI)</h2>
-                             <br />
-                             <p><strong>© 2018-2019 SIAS.</strong> All Right Reserved</P>
-                             <p>Programmer Application By: <strong>ChristinaSita & D'Verayanti</strong></p>
+                             <br>
+                             <p><strong>© 2018-2019 SIAP.</strong> All Right Reserved</P>
+                             <p>Programmer Application By: <strong><a href="https://github.com/deyan-ardi"
+                                         style="text-decoration: none;">ChristinaSita
+                                         & D'Verayanti</a> </strong>
+                             </p>
                          </div>
                      </div>
                  </form>

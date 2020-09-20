@@ -49,9 +49,9 @@
                             foreach ($pegawai as $data) : ?>
                             <tr>
                                 <td><?= $i++ ?></td>
+                                <td><?= $data['nrp'] ?></td>
                                 <td><img src="<?= base_url() ?>assets/upload/users/<?= $data['gambar'] ?>" alt="gambar"
                                         width="50px"></td>
-                                <td><?= $data['nrp'] ?></td>
                                 <td><?= $data['first_name'] ?></td>
                                 <td><?= $data['pangkat'] ?></td>
                                 <td><?= $data['jabatan'] ?></td>
