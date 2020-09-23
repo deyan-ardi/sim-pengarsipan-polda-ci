@@ -401,36 +401,36 @@ class Surat extends CI_Controller
 			}
 		}
 	}
-	public function print_surat_masuk($id = '')
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
-			$this->data['active'] = "2";
-			$surat = $this->All_model->getSuratMasuk($id);
-			$this->data['surat'] = $surat;
-			if (!empty($surat)) {
-				$this->load->view('page/admin/surat/print_disposisi_surat_masuk', $this->data);
-			} else {
-				show_404();
-			}
-		}
-	}
-	public function print_surat_keluar($id = '')
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('auth/login', 'refresh');
-		} else {
-			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
-			$this->data['active'] = "2";
-			$surat = $this->All_model->getSuratKeluar($id);
-			$this->data['surat'] = $surat;
-			if (!empty($surat)) {
-				$this->load->view('page/admin/surat/print_disposisi_surat_keluar', $this->data);
-			} else {
-				show_404();
-			}
-		}
-	}
+	// public function print_surat_masuk($id = '')
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('auth/login', 'refresh');
+	// 	} else {
+	// 		$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
+	// 		$this->data['active'] = "2";
+	// 		$surat = $this->All_model->getSuratMasuk($id);
+	// 		$this->data['surat'] = $surat;
+	// 		if (!empty($surat)) {
+	// 			$this->load->view('page/admin/surat/print_disposisi_surat_masuk', $this->data);
+	// 		} else {
+	// 			show_404();
+	// 		}
+	// 	}
+	// }
+	// public function print_surat_keluar($id = '')
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('auth/login', 'refresh');
+	// 	} else {
+	// 		$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
+	// 		$this->data['active'] = "2";
+	// 		$surat = $this->All_model->getSuratKeluar($id);
+	// 		$this->data['surat'] = $surat;
+	// 		if (!empty($surat)) {
+	// 			$this->load->view('page/admin/surat/print_disposisi_surat_keluar', $this->data);
+	// 		} else {
+	// 			show_404();
+	// 		}
+	// 	}
+	// }
 }
