@@ -94,8 +94,9 @@
                                      </center>
                                      <?php } else { ?>
                                      <center>
-                                         <a href="<?= base_url() ?>surat/print_surat_keluar/<?= $data['id'] ?>"
-                                             class="btn btn-primary" title="Print"><i class="fa fa fa-print"></i></a>
+                                         <a href="<?= base_url() ?>assets/upload/surat_keluar/<?= $data['file'] ?>"
+                                             target="_blank" class="btn btn-primary" title="Print"><i
+                                                 class="fa fa fa-print"></i></a>
                                      </center>
                                      <?php } ?>
                                  </td>

@@ -49,8 +49,8 @@
     </thead>
     <tbody>
         <?php
-		$i = 1;
-		foreach ($data as $data) : ?>
+        $i = 1;
+        foreach ($data as $data) : ?>
         <tr>
             <td><?= $i++ ?></td>
             <td>No Agenda <?= $data['no_agenda'] ?></td>
