@@ -83,10 +83,6 @@ class Agenda extends CI_Controller
 		} else {
 			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
 			$this->data['active'] = "2";
-<<<<<<< HEAD
-			$this->data['surat'] = $this->All_model->getSuratMasukWhere();
-			$this->load->view('page/admin/agenda/print_surat_masuk', $this->data);
-=======
 			$start = new Datetime($_POST['dari_tanggal']);
 			$end = new Datetime($_POST['sampai_tanggal']);
 			if ($start > $end) {
@@ -96,7 +92,6 @@ class Agenda extends CI_Controller
 				$this->data['surat'] = $this->All_model->getSuratMasukWhere();
 				$this->load->view('page/admin/agenda/print_surat_masuk', $this->data);
 			}
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 	}
 	public function lap_surat_keluar()
@@ -106,13 +101,6 @@ class Agenda extends CI_Controller
 		} else {
 			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
 			$this->data['active'] = "2";
-<<<<<<< HEAD
-			$this->data['surat'] = $this->All_model->getSuratKeluarWhere();
-			$this->load->view('page/admin/agenda/print_surat_keluar', $this->data);
-		}
-	}
-}
-=======
 			$start = new Datetime($_POST['dari_tanggal']);
 			$end = new Datetime($_POST['sampai_tanggal']);
 			if ($start > $end) {
@@ -125,4 +113,3 @@ class Agenda extends CI_Controller
 		}
 	}
 }
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

@@ -78,11 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-<<<<<<< HEAD
 	'database' => 'db_siap',
-=======
-	'database' => 'project_siap',
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

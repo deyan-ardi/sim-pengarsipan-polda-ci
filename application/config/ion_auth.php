@@ -41,10 +41,7 @@ $config['database_group_name'] = '';
 */
 $config['tables']['users']           = 'users';
 $config['tables']['groups']          = 'groups';
-<<<<<<< HEAD
-=======
 $config['tables']['satker']          = 'satker';
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 $config['tables']['users_groups']    = 'users_groups';
 $config['tables']['login_attempts']  = 'login_attempts';
 
@@ -226,8 +223,4 @@ $config['delimiters_source']       = 'config'; 	// "config" = use the settings d
 $config['message_start_delimiter'] = '<p>'; 	// Message start delimiter
 $config['message_end_delimiter']   = '</p>'; 	// Message end delimiter
 $config['error_start_delimiter']   = '<p>';		// Error message start delimiter
-<<<<<<< HEAD
 $config['error_end_delimiter']     = '</p>';	// Error message end delimiter
-=======
-$config['error_end_delimiter']     = '</p>';	// Error message end delimiter
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

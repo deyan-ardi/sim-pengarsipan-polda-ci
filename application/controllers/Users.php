@@ -73,13 +73,6 @@ class Users extends CI_Controller
 				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 				if ($upload['result'] == "success") {
 					if ($this->All_model->editProfil($upload, $id_edit)) {
-<<<<<<< HEAD
-						redirect('users/profile');
-					} else {
-						redirect('users/edit_profile');
-					}
-				} else {
-=======
 						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 						redirect('users/profile');
 					} else {
@@ -88,47 +81,28 @@ class Users extends CI_Controller
 					}
 				} else {
 					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('users/edit_profile');
 					// var_dump($upload);
 					// show_error($upload);
 				}
 			} else {
 				if ($this->All_model->editProfilFile($id_edit)) {
-<<<<<<< HEAD
-					redirect('users/profile');
-				} else {
-=======
 					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
 					redirect('users/profile');
 				} else {
 					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('users/edit_profile');
 				}
 			}
 		}
 	}
-<<<<<<< HEAD
-	public function rm_user($id)
-=======
 	public function rm_user($id = '')
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			if ($this->ion_auth->is_admin()) {
 				//list the users
-<<<<<<< HEAD
-				$hapus = $this->ion_auth_model->hapus_user($id);
-				if ($hapus) {
-					$this->session->set_flashdata('berhasil', 'Dihapus');
-					redirect('users', 'refresh');
-				} else {
-					$this->session->set_flashdata('gagal', 'Dihapus');
-					redirect('users', 'refresh');
-=======
 				$account = $this->ion_auth_model->getAccount($id);
 				if ($account > 0) {
 					$this->session->set_flashdata('gagal', "Can't Remove Admin");
@@ -142,15 +116,10 @@ class Users extends CI_Controller
 						$this->session->set_flashdata('gagal', 'Data Gagal Dihapus');
 						redirect('users', 'refresh');
 					}
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				}
 			} else {
 				redirect('users/profile', 'refresh');
 			}
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

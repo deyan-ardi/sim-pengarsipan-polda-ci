@@ -50,17 +50,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'auth';
-<<<<<<< HEAD
-$route['404_override'] = '';
-=======
 $route['404_override'] = 'Notfound';
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 $route['translate_uri_dashes'] = FALSE;
 $route['users/ganti_password'] = 'auth/change_password';
 $route['users/tmb_user'] = 'auth/create_user';
 $route['users/tmb_group'] = 'auth/create_group';
-<<<<<<< HEAD
 $route['users/edt_user/(:num)'] = 'auth/edit_user/$1';
-=======
-$route['users/edt_user/(:num)'] = 'auth/edit_user/$1';
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

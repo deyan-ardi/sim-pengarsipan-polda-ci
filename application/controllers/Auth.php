@@ -119,20 +119,12 @@ class Auth extends CI_Controller
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
 				//if the login is successful
 				//redirect them back to the home page
-<<<<<<< HEAD
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-=======
 				$this->session->set_flashdata('success', strip_tags($this->ion_auth->messages()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				redirect('/', 'refresh');
 			} else {
 				// if the login was un-successful
 				// redirect them back to the login page
-<<<<<<< HEAD
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 				$this->session->set_flashdata('message', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		} else {
@@ -374,17 +366,10 @@ class Auth extends CI_Controller
 
 					if ($change) {
 						// if the password was successfully changed
-<<<<<<< HEAD
-						$this->session->set_flashdata('message', $this->ion_auth->messages());
-						redirect("auth/login", 'refresh');
-					} else {
-						$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 						$this->session->set_flashdata('message', strip_tags($this->ion_auth->messages()));
 						redirect("auth/login", 'refresh');
 					} else {
 						$this->session->set_flashdata('message', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 						redirect('auth/reset_password/' . $code, 'refresh');
 					}
 				}
@@ -414,19 +399,11 @@ class Auth extends CI_Controller
 
 		if ($activation) {
 			// redirect them to the auth page
-<<<<<<< HEAD
-			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("users/", 'refresh');
-		} else {
-			// redirect them to the forgot password page
-			$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 			$this->session->set_flashdata('success', strip_tags($this->ion_auth->messages()));
 			redirect("users/", 'refresh');
 		} else {
 			// redirect them to the forgot password page
 			$this->session->set_flashdata('gagal', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			redirect("auth/forgot_password", 'refresh');
 		}
 	}
@@ -444,13 +421,6 @@ class Auth extends CI_Controller
 		}
 
 		$id = (int)$id;
-<<<<<<< HEAD
-		// do we have the right userlevel?
-		if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin()) {
-			$this->ion_auth->deactivate($id);
-		}
-
-=======
 		$account = $this->ion_auth->getAccount($id);
 		// do we have the right userlevel
 		if ($account > 0) {
@@ -459,7 +429,6 @@ class Auth extends CI_Controller
 			$this->ion_auth->deactivate($id);
 			$this->session->set_flashdata('success', "Account is Deactivate");
 		}
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		// redirect them back to the auth page
 		redirect('users', 'refresh');
 	}
@@ -483,26 +452,17 @@ class Auth extends CI_Controller
 
 				// validate form input
 				$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
-<<<<<<< HEAD
-				$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim|required');
-=======
 				$this->form_validation->set_rules('nrp', 'The Field NRP is Required', 'trim|required|integer');
 				$this->form_validation->set_rules('pangkat', 'The Field Pangkat is Required', 'trim|required');
 				$this->form_validation->set_rules('jabatan', 'The Field Jabatan is Required', 'trim|required');
 				$this->form_validation->set_rules('satuan_kerja', 'The Field Satuan Kerja is Required', 'trim|required');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				if ($identity_column !== 'email') {
 					$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
 				} else {
 					$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
 				}
-<<<<<<< HEAD
-				$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim');
-				$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim');
-=======
 				$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|integer|required');
 				$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim|required');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|matches[password_confirm]');
 				$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -510,11 +470,7 @@ class Auth extends CI_Controller
 					$nama_baru = date('YmdHis');;
 					$id_surat = "users";
 					if ($_FILES["file"]['error'] == 4) {
-<<<<<<< HEAD
-						$this->session->set_flashdata('gagal', 'Ditambahkan');
-=======
 						$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 						redirect('users/tmb_user');
 					} else {
 						$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
@@ -525,24 +481,16 @@ class Auth extends CI_Controller
 
 							$additional_data = [
 								'first_name' => $this->input->post('first_name'),
-<<<<<<< HEAD
-								'last_name' => $this->input->post('last_name'),
-=======
 								'nrp' => $this->input->post('nrp'),
 								'pangkat' => $this->input->post('pangkat'),
 								'jabatan' => $this->input->post('jabatan'),
 								'id_satker' => $this->input->post('satuan_kerja'),
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 								'jenis_kelamin' => $this->input->post('jenis_kelamin'),
 								'phone' => $this->input->post('phone'),
 								'gambar' => $upload['file']['file_name'],
 							];
 						} else {
-<<<<<<< HEAD
-							$this->session->set_flashdata('gagal', 'Ditambahkan');
-=======
 							$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 							redirect('users/tmb_user');
 						}
 					}
@@ -550,79 +498,18 @@ class Auth extends CI_Controller
 				if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data)) {
 					// check to see if we are creating the user
 					// redirect them back to the admin page
-<<<<<<< HEAD
-					$this->session->set_flashdata('berhasil', 'Ditambahkan');
-=======
 					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('users', 'refresh');
 				} else {
 					// display the create user form
 					// set the flash data error message if there is one
-<<<<<<< HEAD
-					$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-					$this->data['first_name'] = [
-						'name' => 'first_name',
-						'id' => 'first_name',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('first_name'),
-					];
-					$this->data['last_name'] = [
-						'name' => 'last_name',
-						'id' => 'last_name',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('last_name'),
-					];
-					$this->data['identity'] = [
-						'name' => 'identity',
-						'id' => 'identity',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('identity'),
-					];
-					$this->data['email'] = [
-						'name' => 'email',
-						'id' => 'email',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('email'),
-					];
-					$this->data['jenis_kelamin'] = [
-						'name' => 'jenis_kelamin',
-						'id' => 'jenis_kelamin',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('jenis_kelamin'),
-					];
-					$this->data['phone'] = [
-						'name' => 'phone',
-						'id' => 'phone',
-						'type' => 'text',
-						'value' => $this->form_validation->set_value('phone'),
-					];
-					$this->data['password'] = [
-						'name' => 'password',
-						'id' => 'password',
-						'type' => 'password',
-						'value' => $this->form_validation->set_value('password'),
-					];
-					$this->data['password_confirm'] = [
-						'name' => 'password_confirm',
-						'id' => 'password_confirm',
-						'type' => 'password',
-						'value' => $this->form_validation->set_value('password_confirm'),
-					];
-
-=======
 					$this->data['message'] = (validation_errors() ? validation_errors() : (strip_tags($this->ion_auth->errors()) ? strip_tags($this->ion_auth->errors()) : $this->session->flashdata('gagal')));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					$this->data['title'] = "Setelan Users - Tambah User";
 					$this->data['active'] = "4";
 					$id = $_SESSION['user_id'];
 					$this->data['users'] = $this->All_model->getUsers($id);
 					$this->data['group'] = $this->ion_auth_model->getGroup($id);
-<<<<<<< HEAD
-=======
 					$this->data['satker'] = $this->All_model->getAllSatker();
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					$this->load->view('master/header', $this->data);
 					$this->load->view('auth/create_user', $this->data);
 					$this->load->view('master/footer', $this->data);
@@ -663,13 +550,6 @@ class Auth extends CI_Controller
 
 
 		// validate form input
-<<<<<<< HEAD
-		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim|required');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('edit_user_validation_company_label'), 'trim');
-
-=======
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
 		$this->form_validation->set_rules('nrp', 'The Field NRP is Required', 'trim|required|integer');
 		$this->form_validation->set_rules('pangkat', 'The Field Pangkat is Required', 'trim|required');
@@ -677,7 +557,6 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('satuan_kerja', 'The Field Satuan Kerja is Required', 'trim|required');
 		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|integer|required');
 		$this->form_validation->set_rules('jenis_kelamin', $this->lang->line('create_user_validation_company_label'), 'trim|required');
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		if (isset($_POST) && !empty($_POST)) {
 			// do we have a valid request?
 			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
@@ -694,18 +573,12 @@ class Auth extends CI_Controller
 				if ($_FILES["file"]['error'] == 4) {
 					$data = [
 						'first_name' => $this->input->post('first_name'),
-<<<<<<< HEAD
-						'last_name' => $this->input->post('last_name'),
-						'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-						'phone' => $this->input->post('phone'),
-=======
 						'nrp' => $this->input->post('nrp'),
 						'jenis_kelamin' => $this->input->post('jenis_kelamin'),
 						'pangkat' => $this->input->post('pangkat'),
 						'jabatan' => $this->input->post('jabatan'),
 						'phone' => $this->input->post('phone'),
 						'id_satker' => $this->input->post('satuan_kerja'),
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 						'gambar' => $this->input->post('old_file'),
 					];
 				} else {
@@ -715,18 +588,12 @@ class Auth extends CI_Controller
 					if ($upload['result'] == "success") {
 						$data = [
 							'first_name' => $this->input->post('first_name'),
-<<<<<<< HEAD
-							'last_name' => $this->input->post('last_name'),
-							'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-							'phone' => $this->input->post('phone'),
-=======
 							'nrp' => $this->input->post('nrp'),
 							'jenis_kelamin' => $this->input->post('jenis_kelamin'),
 							'pangkat' => $this->input->post('pangkat'),
 							'jabatan' => $this->input->post('jabatan'),
 							'phone' => $this->input->post('phone'),
 							'id_satker' => $this->input->post('satuan_kerja'),
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 							'gambar' => $upload['file']['file_name'],
 						];
 					}
@@ -752,19 +619,11 @@ class Auth extends CI_Controller
 				// check to see if we are updating the user
 				if ($this->ion_auth->update($user->id, $data)) {
 					// redirect them back to the admin page if admin, or to the base url if non admin
-<<<<<<< HEAD
-					$this->session->set_flashdata('message', $this->ion_auth->messages());
-					redirect('users', 'refresh');
-				} else {
-					// redirect them back to the admin page if admin, or to the base url if non admin
-					$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 					$this->session->set_flashdata('success', strip_tags($this->ion_auth->messages()));
 					redirect('users', 'refresh');
 				} else {
 					// redirect them back to the admin page if admin, or to the base url if non admin
 					$this->session->set_flashdata('gagal', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('users', 'refresh');
 				}
 			}
@@ -775,39 +634,23 @@ class Auth extends CI_Controller
 
 
 			// set the flash data error message if there is one
-<<<<<<< HEAD
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-=======
 			$this->data['message'] = (validation_errors() ? validation_errors() : (strip_tags($this->ion_auth->errors()) ? strip_tags($this->ion_auth->errors()) : $this->session->flashdata('gagal')));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 
 			// pass the user to the view
 			$this->data['user'] = $user;
 			$this->data['groups'] = $groups;
 			$this->data['currentGroups'] = $currentGroups;
-<<<<<<< HEAD
-
-=======
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->data['first_name'] = [
 				'name'  => 'first_name',
 				'id'    => 'first_name',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('first_name', $user->first_name),
 			];
-<<<<<<< HEAD
-			$this->data['last_name'] = [
-				'name'  => 'last_name',
-				'id'    => 'last_name',
-				'type'  => 'text',
-				'value' => $this->form_validation->set_value('last_name', $user->last_name),
-=======
 			$this->data['nrp'] = [
 				'name'  => 'nrp',
 				'id'    => 'nrp',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('nrp', $user->nrp),
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			];
 			$this->data['jenis_kelamin'] = [
 				'name'  => 'jenis_kelamin',
@@ -815,8 +658,6 @@ class Auth extends CI_Controller
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('jenis_kelamin', $user->jenis_kelamin),
 			];
-<<<<<<< HEAD
-=======
 			$this->data['pangkat'] = [
 				'name'  => 'pangkat',
 				'id'    => 'pangkat',
@@ -835,7 +676,6 @@ class Auth extends CI_Controller
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('id_satker', $user->id_satker),
 			];
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->data['phone'] = [
 				'name'  => 'phone',
 				'id'    => 'phone',
@@ -856,10 +696,7 @@ class Auth extends CI_Controller
 			$this->data['title'] = "Setelan Users - Edit User";
 			$this->data['active'] = "4";
 			$id = $_SESSION['user_id'];
-<<<<<<< HEAD
-=======
 			$this->data['satker'] = $this->All_model->getAllSatker();
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->data['users'] = $this->All_model->getUsers($id);
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);
@@ -886,27 +723,16 @@ class Auth extends CI_Controller
 			if ($new_group_id) {
 				// check to see if we are creating the group
 				// redirect them back to the admin page
-<<<<<<< HEAD
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('users', 'refresh');
-			} else {
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 				$this->session->set_flashdata('success', strip_tags($this->ion_auth->messages()));
 				redirect('users', 'refresh');
 			} else {
 				$this->session->set_flashdata('gagal', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			}
 		}
 
 		// display the create group form
 		// set the flash data error message if there is one
-<<<<<<< HEAD
-		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-=======
 		$this->data['message'] = (validation_errors() ? validation_errors() : (strip_tags($this->ion_auth->errors()) ? strip_tags($this->ion_auth->errors()) : $this->session->flashdata('message')));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 
 		$this->data['group_name'] = [
 			'name'  => 'group_name',
@@ -961,27 +787,16 @@ class Auth extends CI_Controller
 				));
 
 				if ($group_update) {
-<<<<<<< HEAD
-					$this->session->set_flashdata('message', $this->lang->line('edit_group_saved'));
-					redirect('users', 'refresh');
-				} else {
-					$this->session->set_flashdata('message', $this->ion_auth->errors());
-=======
 					$this->session->set_flashdata('success', strip_tags($this->lang->line('edit_group_saved')));
 					redirect('users', 'refresh');
 				} else {
 					$this->session->set_flashdata('gagal', strip_tags($this->ion_auth->errors()));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				}
 			}
 		}
 
 		// set the flash data error message if there is one
-<<<<<<< HEAD
-		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-=======
 		$this->data['message'] = (validation_errors() ? validation_errors() : (strip_tags($this->ion_auth->errors()) ? strip_tags($this->ion_auth->errors()) : $this->session->flashdata('message')));
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 
 		// pass the user to the view
 		$this->data['group'] = $group;
@@ -1058,8 +873,4 @@ class Auth extends CI_Controller
 			return $view_html;
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
