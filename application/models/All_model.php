@@ -177,12 +177,32 @@ class All_model extends CI_Model
 	}
 	public function getAllPegawai()
 	{
+<<<<<<< HEAD
 		$this->db->select('*');
 		$this->db->from('pegawai');
 		$this->db->join('satker', 'pegawai.id_satker = satker.id_satker');
 		return $this->db->get()->result_array();
 	}
 
+=======
+		$this->db->select('users.*,satker.kode_satker,satker.nama_satker');
+		$this->db->from('users');
+		$this->db->join('satker', 'users.id_satker = satker.id_satker');
+		$this->db->join('users_groups', 'users_groups.user_id = users.id');
+		$this->db->where('users_groups.group_id != 1');
+		return $this->db->get()->result_array();
+	}
+	public function getAllPegawaiWhere($id)
+	{
+		$this->db->select('users.*,satker.kode_satker,satker.nama_satker');
+		$this->db->from('users');
+		$this->db->join('satker', 'users.id_satker = satker.id_satker');
+		$this->db->join('users_groups', 'users_groups.user_id = users.id');
+		$this->db->where('users_groups.group_id != 1');
+		$this->db->where('users.id !=' . $id);
+		return $this->db->get()->result_array();
+	}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	public function getPegawai($id)
 	{
 		$this->db->select('*');
@@ -207,6 +227,10 @@ class All_model extends CI_Model
 		$row = $this->db->where('id=', $id)->get('pegawai')->row();
 		if ($this->db->delete('pegawai', array('id' => $id))) {
 			unlink('assets/upload/pegawai/' . $row->gambar);
+<<<<<<< HEAD
+=======
+			return true;
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 	}
 
@@ -242,7 +266,11 @@ class All_model extends CI_Model
 		);
 		return $this->db->where('id=' . $id)->update('jenis_surat', $query);
 	}
+<<<<<<< HEAD
 	public function hapusJenisSUrat($id)
+=======
+	public function hapusJenisSurat($id)
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		return $this->db->delete('jenis_surat', array('id' => $id));
 	}
@@ -481,18 +509,27 @@ class All_model extends CI_Model
 		}
 	}
 	// Disposisi
+<<<<<<< HEAD
 	public function inputDisposisi($data, $agenda)
+=======
+	public function inputDisposisi($agenda)
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		$query = array(
 			'no_agenda' => $agenda,
 			'id_surat'	=> htmlspecialchars($this->input->post('no_surat', true)),
 			'perihal'	=> htmlspecialchars($this->input->post('perihal', true)),
+<<<<<<< HEAD
 			'file'	=> $data['file']['file_name'],
 			'tujuan'	=> htmlspecialchars($this->input->post('tujuan', true)),
+=======
+			'id_users'	=> htmlspecialchars($this->input->post('tujuan', true)),
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			'isi_disposisi'	=> htmlspecialchars($this->input->post('isi_disposisi', true)),
 			'sifat'	=> htmlspecialchars($this->input->post('sifat', true)),
 			'batas_waktu'	=> htmlspecialchars($this->input->post('batas_waktu', true)),
 			'catatan'	=> htmlspecialchars($this->input->post('catatan', true)),
+<<<<<<< HEAD
 		);
 		return $this->db->insert('disposisi', $query);
 	}
@@ -512,17 +549,32 @@ class All_model extends CI_Model
 		return $this->db->where('id_disp=' . $id)->update('disposisi', $query);
 	}
 	public function editDisposisiFile($id)
+=======
+			'created_by' => htmlspecialchars($this->input->post('id_user', true)),
+		);
+		return $this->db->insert('disposisi', $query);
+	}
+	public function editDisposisi($id)
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		$query = array(
 			'no_agenda' => htmlspecialchars($this->input->post('agenda', true)),
 			'id_surat'	=> htmlspecialchars($this->input->post('no_surat', true)),
 			'perihal'	=> htmlspecialchars($this->input->post('perihal', true)),
+<<<<<<< HEAD
 			'file'	=> htmlspecialchars($this->input->post('file', true)),
 			'tujuan'	=> htmlspecialchars($this->input->post('tujuan', true)),
+=======
+			'id_users'	=> htmlspecialchars($this->input->post('tujuan', true)),
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			'isi_disposisi'	=> htmlspecialchars($this->input->post('isi_disposisi', true)),
 			'sifat'	=> htmlspecialchars($this->input->post('sifat', true)),
 			'batas_waktu'	=> htmlspecialchars($this->input->post('batas_waktu', true)),
 			'catatan'	=> htmlspecialchars($this->input->post('catatan', true)),
+<<<<<<< HEAD
+=======
+			'created_by' => htmlspecialchars($this->input->post('id_user', true)),
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		);
 		return $this->db->where('id_disp=' . $id)->update('disposisi', $query);
 	}
@@ -530,27 +582,50 @@ class All_model extends CI_Model
 	{
 		return $this->db->get('disposisi')->num_rows();
 	}
+<<<<<<< HEAD
 	public function getAllDisposisi()
 	{
 		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,disposisi.perihal,disposisi.file,disposisi.tujuan,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan');
 		$this->db->from('disposisi');
 		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+=======
+	public function getAllDisposisi($id)
+	{
+		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_surat,disposisi.perihal,surat_masuk.file,disposisi.id_users,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan,users.first_name,users.jabatan,disposisi.created_by');
+		$this->db->from('disposisi');
+		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+		$this->db->join('users', 'disposisi.id_users = users.id');
+		$this->db->where('disposisi.id_users =' . $id);
+		$this->db->or_where('disposisi.created_by =' . $id);
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		return $this->db->get()->result_array();
 	}
 	public function getDisposisi($id)
 	{
+<<<<<<< HEAD
 		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,surat_masuk.id as id_surat,disposisi.perihal,disposisi.file,disposisi.tujuan,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan');
 		$this->db->where('disposisi.id_disp=' . $id);
 		$this->db->from('disposisi');
 		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+=======
+		$this->db->select('disposisi.id_disp,disposisi.no_agenda,surat_masuk.no_agenda as nomor_agenda,surat_masuk.no_surat,surat_masuk.id as id_surat,disposisi.perihal,disposisi.id_users,disposisi.isi_disposisi,disposisi.sifat,disposisi.batas_waktu,disposisi.catatan,disposisi.created_by, users.first_name');
+		$this->db->where('disposisi.id_disp=' . $id);
+		$this->db->from('disposisi');
+		$this->db->join('surat_masuk', 'disposisi.id_surat = surat_masuk.id');
+		$this->db->join('users', 'disposisi.id_users = users.id');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		return $this->db->get()->result_array();
 	}
 	public function hapusDisposisi($id)
 	{
+<<<<<<< HEAD
 		$row = $this->db->where('id_disp=', $id)->get('disposisi')->row();
 		if ($this->db->delete('disposisi', array('id_disp' => $id))) {
 			unlink('assets/upload/disposisi/' . $row->file);
 		}
+=======
+		return $this->db->delete('disposisi', array('id_disp' => $id));
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	}
 	// Users
 	public function getRowUsers()
@@ -614,6 +689,10 @@ class All_model extends CI_Model
 	{
 		$this->db->select('surat_masuk.id as id_surat,surat_masuk.no_agenda,surat_masuk.no_surat,nama_jenis,nama_klasifikasi,kode_arsip.kode_arsip,surat_masuk.tanggal_surat,surat_masuk.tanggal_terima,nama_satker,surat_masuk.perihal,surat_masuk.isi_ringkas,surat_masuk.lampiran,surat_masuk.keterangan,surat_masuk.file,jenis_naskah');
 		$this->db->where('surat_masuk.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('dari_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"');
+<<<<<<< HEAD
+=======
+		$this->db->or_where('surat_masuk.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('dari_tanggal', true)) . '"');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		$this->db->from('surat_masuk');
 		$this->db->join('satker', 'surat_masuk.asal_surat = satker.id_satker');
 		$this->db->join('jenis_surat', 'surat_masuk.jenis_surat = jenis_surat.id');
@@ -627,6 +706,10 @@ class All_model extends CI_Model
 		$this->db->select('surat_keluar.id,surat_keluar.no_agenda,surat_keluar.no_surat,nama_jenis,nama_klasifikasi,kode_arsip.kode_arsip,surat_keluar.tanggal_surat,surat_keluar.tanggal_kirim,surat_keluar.tujuan,surat_keluar.perihal,surat_keluar.isi_ringkas,surat_keluar.lampiran,surat_keluar.keterangan,surat_keluar.file,jenis_naskah, username');
 		$this->db->from('surat_keluar');
 		$this->db->where('surat_keluar.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('dari_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"');
+<<<<<<< HEAD
+=======
+		$this->db->or_where('surat_keluar.tanggal_surat BETWEEN"' .  htmlspecialchars($this->input->post('sampai_tanggal', true)) . '"AND"' . htmlspecialchars($this->input->post('dari_tanggal', true)) . '"');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		$this->db->join('jenis_surat', 'surat_keluar.jenis_surat = jenis_surat.id');
 		$this->db->join('klasifikasi_surat', 'surat_keluar.klasifikasi_surat = klasifikasi_surat.id');
 		$this->db->join('kode_arsip', 'surat_keluar.kode_arsip = kode_arsip.id');

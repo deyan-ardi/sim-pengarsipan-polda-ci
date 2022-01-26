@@ -53,11 +53,19 @@
 <script src="<?= base_url() ?>assets/template/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 <!-- Custom Theme Scripts -->
+<<<<<<< HEAD
 <script src="<?= base_url() ?>assets/template/build/js/custom.min.js"></script>
 <script src="<?= base_url() ?>assets/js/main.js"></script>
 <!-- Sweetalert -->
 <script src="<?= base_url() ?>assets/js/sweetalert2.js"></script>
 <script src="<?= base_url() ?>assets/js/alert-main.js"></script>
+=======
+<script src="<?= base_url() ?>assets/js/sweetalert2.js"></script>
+<script src="<?= base_url() ?>assets/template/build/js/custom.min.js"></script>
+<script src="<?= base_url() ?>assets/js/main.js"></script>
+<!-- Sweetalert -->
+
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 </body>
 
 </html>

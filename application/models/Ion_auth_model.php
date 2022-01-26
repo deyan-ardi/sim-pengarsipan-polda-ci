@@ -463,7 +463,14 @@ class Ion_auth_model extends CI_Model
 
 		return $return;
 	}
+<<<<<<< HEAD
 
+=======
+	public function getAccount($id)
+	{
+		return $this->db->where('user_id =', $id)->where('group_id = 1')->get('users_groups')->num_rows();
+	}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	/**
 	 * Clear the forgotten password code for a user
 	 *
@@ -1299,20 +1306,41 @@ class Ion_auth_model extends CI_Model
 	public function users($groups = NULL)
 	{
 		$this->trigger_events('users');
+<<<<<<< HEAD
 
+=======
+		$this->trigger_events('satker');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		if (isset($this->_ion_select) && !empty($this->_ion_select)) {
 			foreach ($this->_ion_select as $select) {
 				$this->db->select($select);
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->_ion_select = [];
 		} else {
 			// default selects
 			$this->db->select([
 				$this->tables['users'] . '.*',
+<<<<<<< HEAD
 				$this->tables['users'] . '.id as id',
 				$this->tables['users'] . '.id as user_id'
 			]);
+=======
+				$this->tables['satker'] . '.kode_satker',
+				$this->tables['satker'] . '.nama_satker',
+				$this->tables['users'] . '.id as id',
+				$this->tables['users'] . '.id as user_id',
+
+			]);
+			$this->db->join(
+				$this->tables['satker'],
+				$this->tables['satker'] . '.id_satker' .  '=' . $this->tables['users'] . '.id_satker',
+				'inner'
+			);
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 
 		// filter by group id(s) if passed
@@ -1387,9 +1415,13 @@ class Ion_auth_model extends CI_Model
 			$this->_ion_order    = NULL;
 			$this->_ion_order_by = NULL;
 		}
+<<<<<<< HEAD
 
 		$this->response = $this->db->get($this->tables['users']);
 
+=======
+		$this->response = $this->db->get($this->tables['users']);
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		return $this;
 	}
 
@@ -2629,4 +2661,8 @@ class Ion_auth_model extends CI_Model
 		}
 		return true;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

@@ -1,9 +1,15 @@
+<<<<<<< HEAD
+=======
+<div class="success" data-success="<?= $this->session->flashdata('success') ?>"></div>
+<div class="gagal" data-gagal="<?= $this->session->flashdata('gagal') ?>"></div>
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 <div class="">
     <div class="page-title">
         <div class="title_left">
             <h3>Tambah Jenis Naskah</h3>
         </div>
     </div>
+<<<<<<< HEAD
     <?php if ($this->session->flashdata('berhasil')) : ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         Data <strong>Berhasil</strong> <?= $this->session->flashdata('berhasil'); ?>
@@ -20,6 +26,8 @@
         </button>
     </div>
     <?php endif; ?>
+=======
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
     <div class="clearfix"></div>
 
     <div class="row">

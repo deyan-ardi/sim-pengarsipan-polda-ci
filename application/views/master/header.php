@@ -17,7 +17,11 @@
     <!-- NProgress -->
     <link href="<?= base_url() ?>assets/template/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
+<<<<<<< HEAD
     <link href="<?= base_url() ?>assets./template/vendors/animate.css/animate.min.css" rel="stylesheet">
+=======
+    <link href="<?= base_url() ?>assets/template/vendors/animate.css/animate.min.css" rel="stylesheet">
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 
     <!-- Custom Theme Style -->
     <link href="<?= base_url() ?>assets/template/build/css/custom.min.css" rel="stylesheet">
@@ -30,7 +34,11 @@
     <link href="<?= base_url() ?>assets/template/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
         rel="stylesheet">
     <!-- Sweetalert -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/sweetalert2.css">
+=======
+    <link href="<?= base_url() ?>assets/css/sweetalert2.css" rel="stylesheet">
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 </head>
 <?php if ($active == "0") { ?>
 
@@ -196,7 +204,11 @@
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                                         <li><a href="<?= base_url() ?>users/profile"> Profile</a></li>
                                         <li><a href="<?= base_url() ?>users/ganti_password"> Ganti Password</a></li>
+<<<<<<< HEAD
                                         <li><a href="<?= base_url() ?>auth/logout"><i
+=======
+                                        <li><a href="<?= base_url() ?>auth/logout" class="log-out"><i
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
                                                     class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                     </ul>
                                 </li>

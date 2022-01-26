@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="">
 	<div class="page-title">
 		<div class="title_left">
@@ -75,3 +76,77 @@
 		</div>
 	</div>
 </div>
+=======
+<div class="success" data-success="<?= $this->session->flashdata('success') ?>"></div>
+<div class="gagal" data-gagal="<?= $this->session->flashdata('gagal') ?>"></div>
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Edit Arsip Surat</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Form Edit
+                        Arsip Surat</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <!--Form Edit surat masuk -->
+                    <form class="form-horizontal form-label-left"
+                        action="<?= base_url() ?>referensi/proses_edit_arsip_surat" method="post">
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nama Arsip Surat<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="arsip_surat" value="<?= $arsip[0]['nama_arsip'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Primer<span class="required">&nbsp;
+                                    :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="primer" value="<?= $arsip[0]['primer'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sekunder<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="sekunder" value="<?= $arsip[0]['sekunder'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Tersier<span
+                                    class="required">&nbsp; :</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="tersier" value="<?= $arsip[0]['tersier'] ?>"
+                                    class="form-control col-md-7 col-xs-12" required="required">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id_arsip" value="<?= $arsip[0]['kode_arsip'] ?>">
+                        <input type="hidden" name="id" value="<?= $arsip[0]['id'] ?>">
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button type="reset" class="btn btn-default">Reset</button>
+                                <input type="submit" class="btn btn-success" value="Simpan" name="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937

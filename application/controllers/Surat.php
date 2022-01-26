@@ -65,7 +65,11 @@ class Surat extends CI_Controller
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
 			$this->data['users'] = $this->All_model->getUsers($id);
+<<<<<<< HEAD
 			$this->data['surat'] = $this->All_model->getAllDisposisi();
+=======
+			$this->data['surat'] = $this->All_model->getAllDisposisi($id);
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);
 			$this->load->view('page/admin/surat/disposisi', $this->data);
@@ -103,6 +107,7 @@ class Surat extends CI_Controller
 			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 			if ($upload['result'] == "success") {
 				if ($this->All_model->inputSuratMasuk($upload, $agenda)) {
+<<<<<<< HEAD
 					$this->session->set_flashdata('berhasil', 'Ditambahkan');
 					redirect('surat/surat_masuk');
 				} else {
@@ -110,10 +115,21 @@ class Surat extends CI_Controller
 					redirect('surat/tmb_surat_masuk');
 				}
 			} else {
+=======
+					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
+					redirect('surat/surat_masuk');
+				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
+					redirect('surat/tmb_surat_masuk');
+				}
+			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				redirect('surat/tmb_surat_masuk');
 			}
 		}
 	}
+<<<<<<< HEAD
 	public function hapus_surat_masuk($id)
 	{
 		if (!$this->ion_auth->logged_in()) {
@@ -121,6 +137,15 @@ class Surat extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			$this->All_model->hapusSuratMasuk($id);
+=======
+	public function hapus_surat_masuk($id = '')
+	{
+		if (!$this->ion_auth->logged_in()) {
+			redirect('auth/login', 'refresh');
+		} else {
+			$this->All_model->hapusSuratMasuk($id);
+			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			redirect('surat/surat_masuk');
 		}
 	}
@@ -144,11 +169,16 @@ class Surat extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
+<<<<<<< HEAD
 	public function edit_surat_keluar($id_surat)
+=======
+	public function edit_surat_keluar($id_surat = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
+<<<<<<< HEAD
 			$this->data['title'] = "Transaksi Surat - Tambah Surat Keluar";
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
@@ -163,6 +193,27 @@ class Surat extends CI_Controller
 			$this->load->view('master/header', $this->data);
 			$this->load->view('page/admin/surat/edt_surat_keluar', $this->data);
 			$this->load->view('master/footer', $this->data);
+=======
+			$surat = $this->All_model->getSuratKeluar($id_surat);
+			if (!empty($surat)) {
+				$this->data['title'] = "Transaksi Surat - Tambah Surat Keluar";
+				$this->data['active'] = "2";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['surat_keluar'] = $surat;
+				$this->data['surat'] = $this->All_model->getAllJenisSurat();
+				$this->data['naskah'] = $this->All_model->getAllJenisNaskah();
+				$this->data['arsip'] = $this->All_model->getAllArsip();
+				$this->data['klasifikasi'] = $this->All_model->getAllKlasifikasi();
+				$this->data['satker'] = $this->All_model->getAllSatker();
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/surat/edt_surat_keluar', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 	}
 	public function proses_edt_surat_keluar()
@@ -178,19 +229,37 @@ class Surat extends CI_Controller
 				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 				if ($upload['result'] == "success") {
 					if ($this->All_model->editSuratKeluar($upload, $id_edit, $id)) {
+<<<<<<< HEAD
 						redirect('surat/surat_keluar');
 					} else {
+=======
+						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+						redirect('surat/surat_keluar');
+					} else {
+						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 						redirect('surat/edit_surat_keluar');
 					}
 					// var_dump($upload);
 				} else {
+<<<<<<< HEAD
+=======
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('surat/edit_surat_keluar');
 					// var_dump($upload);
 				}
 			} else {
 				if ($this->All_model->editSuratKeluarFile($id_edit, $id)) {
+<<<<<<< HEAD
 					redirect('surat/surat_keluar');
 				} else {
+=======
+					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+					redirect('surat/surat_keluar');
+				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('surat/edit_surat_keluar');
 				}
 			}
@@ -208,20 +277,36 @@ class Surat extends CI_Controller
 			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 			if ($upload['result'] == "success") {
 				if ($this->All_model->inputSuratKeluar($upload, $agenda, $user)) {
+<<<<<<< HEAD
 					redirect('surat/surat_keluar');
 				} else {
 					redirect('surat/tmb_surat_keluar');
 				}
 			} else {
+=======
+					$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
+					redirect('surat/surat_keluar');
+				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
+					redirect('surat/tmb_surat_keluar');
+				}
+			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				redirect('surat/tmb_surat_keluar');
 			}
 		}
 	}
+<<<<<<< HEAD
 	public function edit_surat_masuk($id_surat)
+=======
+	public function edit_surat_masuk($id_surat = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
+<<<<<<< HEAD
 			$this->data['title'] = "Transaksi Surat - Tambah Disposisi";
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
@@ -236,6 +321,27 @@ class Surat extends CI_Controller
 			$this->load->view('master/header', $this->data);
 			$this->load->view('page/admin/surat/edt_surat_masuk', $this->data);
 			$this->load->view('master/footer', $this->data);
+=======
+			$surat = $this->All_model->getSuratMasuk($id_surat);
+			if (!empty($surat)) {
+				$this->data['title'] = "Transaksi Surat - Tambah Disposisi";
+				$this->data['active'] = "2";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['surat_masuk'] = $surat;
+				$this->data['surat'] = $this->All_model->getAllJenisSurat();
+				$this->data['naskah'] = $this->All_model->getAllJenisNaskah();
+				$this->data['arsip'] = $this->All_model->getAllArsip();
+				$this->data['klasifikasi'] = $this->All_model->getAllKlasifikasi();
+				$this->data['satker'] = $this->All_model->getAllSatker();
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/surat/edt_surat_masuk', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 	}
 	public function proses_edt_surat_masuk()
@@ -250,20 +356,39 @@ class Surat extends CI_Controller
 				$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
 				if ($upload['result'] == "success") {
 					if ($this->All_model->editSuratMasuk($upload, $id_edit)) {
+<<<<<<< HEAD
 						redirect('surat/surat_masuk');
 					} else {
+=======
+						$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+						redirect('surat/surat_masuk');
+					} else {
+						$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 						redirect('surat/edit_surat_masuk');
 					}
 					// var_dump($upload);
 				} else {
+<<<<<<< HEAD
+=======
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 					redirect('surat/edit_surat_masuk');
 					// var_dump($upload);
 				}
 			} else {
 				if ($this->All_model->editSuratMasukFile($id_edit)) {
+<<<<<<< HEAD
 					redirect('surat/surat_masuk');
 				} else {
 					redirect('surat/tmb_surat_masuk');
+=======
+					$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+					redirect('surat/surat_masuk');
+				} else {
+					$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+					redirect('surat/edit_surat_masuk');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				}
 			}
 		}
@@ -277,6 +402,10 @@ class Surat extends CI_Controller
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
 			$this->data['users'] = $this->All_model->getUsers($id);
+<<<<<<< HEAD
+=======
+			$this->data['pegawai'] = $this->All_model->getAllPegawaiWhere($id);
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			$this->data['surat'] = $this->All_model->getAllSuratMasuk();
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
 			$this->load->view('master/header', $this->data);
@@ -284,11 +413,16 @@ class Surat extends CI_Controller
 			$this->load->view('master/footer', $this->data);
 		}
 	}
+<<<<<<< HEAD
 	public function edit_disposisi($id_disposisi)
+=======
+	public function edit_disposisi($id_disposisi = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
+<<<<<<< HEAD
 			$this->data['title'] = "Transaksi Surat - Tambah Disposisi";
 			$this->data['active'] = "2";
 			$id = $_SESSION['user_id'];
@@ -299,6 +433,24 @@ class Surat extends CI_Controller
 			$this->load->view('master/header', $this->data);
 			$this->load->view('page/admin/surat/edt_disposisi', $this->data);
 			$this->load->view('master/footer', $this->data);
+=======
+			$disposisi = $this->All_model->getDisposisi($id_disposisi);
+			if (!empty($disposisi)) {
+				$this->data['title'] = "Transaksi Surat - Tambah Disposisi";
+				$this->data['active'] = "2";
+				$id = $_SESSION['user_id'];
+				$this->data['users'] = $this->All_model->getUsers($id);
+				$this->data['disposisi'] = $disposisi;
+				$this->data['surat'] = $this->All_model->getAllSuratMasuk();
+				$this->data['pegawai'] = $this->All_model->getAllPegawaiWhere($id);
+				$this->data['group'] = $this->ion_auth_model->getGroup($id);
+				$this->load->view('master/header', $this->data);
+				$this->load->view('page/admin/surat/edt_disposisi', $this->data);
+				$this->load->view('master/footer', $this->data);
+			} else {
+				show_404();
+			}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 		}
 	}
 	public function proses_edt_disposisi()
@@ -306,6 +458,7 @@ class Surat extends CI_Controller
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
+<<<<<<< HEAD
 			$nama_baru = $_POST['agenda'];
 			$id_surat = "disposisi";
 			$id_edit = $_POST['id'];
@@ -332,11 +485,29 @@ class Surat extends CI_Controller
 		}
 	}
 	public function hapus_surat_keluar($id)
+=======
+			$id_edit = $_POST['id'];
+
+			if ($this->All_model->editDisposisi($id_edit)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Diubah');
+				redirect('surat/disposisi');
+			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Diubah');
+				redirect('surat/edit_disposisi');
+			}
+		}
+	}
+	public function hapus_surat_keluar($id = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			$this->All_model->hapusSuratKeluar($id);
+<<<<<<< HEAD
+=======
+			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 			redirect('surat/surat_keluar');
 		}
 	}
@@ -346,6 +517,7 @@ class Surat extends CI_Controller
 			redirect('auth/login', 'refresh');
 		} else {
 			$agenda = date('YmdHis');
+<<<<<<< HEAD
 			$nama_baru = strtolower($agenda);
 			$id_surat = "disposisi";
 			$upload = $this->All_model->uploadFile($nama_baru, $id_surat);
@@ -356,16 +528,28 @@ class Surat extends CI_Controller
 					redirect('surat/tmb_disposisi');
 				}
 			} else {
+=======
+			if ($this->All_model->inputDisposisi($agenda)) {
+				$this->session->set_flashdata('success', 'Data Berhasil Ditambahkan');
+				redirect('surat/disposisi');
+			} else {
+				$this->session->set_flashdata('gagal', 'Data Gagal Ditambahkan');
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 				redirect('surat/tmb_disposisi');
 			}
 		}
 	}
+<<<<<<< HEAD
 	public function hapus_disposisi($id)
+=======
+	public function hapus_disposisi($id = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
 			$this->All_model->hapusDisposisi($id);
+<<<<<<< HEAD
 			redirect('surat/disposisi');
 		}
 	}
@@ -381,10 +565,18 @@ class Surat extends CI_Controller
 		}
 	}
 	public function print_surat_keluar($id)
+=======
+			$this->session->set_flashdata('success', 'Data Berhasil Dihapus');
+			redirect('surat/disposisi');
+		}
+	}
+	public function print_disposisi($id = '')
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('auth/login', 'refresh');
 		} else {
+<<<<<<< HEAD
 			$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
 			$this->data['active'] = "2";
 			$this->data['surat'] = $this->All_model->getSuratKeluar($id);
@@ -392,3 +584,51 @@ class Surat extends CI_Controller
 		}
 	}
 }
+=======
+			$this->data['title'] = "Transaksi Surat - Print Disposisi Masuk";
+			$this->data['active'] = "2";
+			$surat_data = $this->All_model->getDisposisi($id);
+			$user = $this->All_model->getUsers($surat_data[0]['created_by']);
+			$this->data['surat'] = $surat_data;
+			$this->data['users'] = $user;
+			if (!empty($surat_data) && !empty($user)) {
+				$this->load->view('page/admin/surat/print_disposisi', $this->data);
+			} else {
+				show_404();
+			}
+		}
+	}
+	// public function print_surat_masuk($id = '')
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('auth/login', 'refresh');
+	// 	} else {
+	// 		$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
+	// 		$this->data['active'] = "2";
+	// 		$surat = $this->All_model->getSuratMasuk($id);
+	// 		$this->data['surat'] = $surat;
+	// 		if (!empty($surat)) {
+	// 			$this->load->view('page/admin/surat/print_disposisi_surat_masuk', $this->data);
+	// 		} else {
+	// 			show_404();
+	// 		}
+	// 	}
+	// }
+	// public function print_surat_keluar($id = '')
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('auth/login', 'refresh');
+	// 	} else {
+	// 		$this->data['title'] = "Transaksi Surat - Print Surat Masuk";
+	// 		$this->data['active'] = "2";
+	// 		$surat = $this->All_model->getSuratKeluar($id);
+	// 		$this->data['surat'] = $surat;
+	// 		if (!empty($surat)) {
+	// 			$this->load->view('page/admin/surat/print_disposisi_surat_keluar', $this->data);
+	// 		} else {
+	// 			show_404();
+	// 		}
+	// 	}
+	// }
+}
+>>>>>>> 2305d0a090190a8cf2865d008f96066c86ca4937
